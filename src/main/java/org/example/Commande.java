@@ -1,13 +1,16 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Commande {
-    private Client client;
-    private HashMap<String, Integer> produits;
+    private int table;
+    private boolean enPreparation;
 
-    public Commande(Client client, HashMap<String, Integer> produits) {
-        this.client = client;
+    // Tableau contenant plusieurs Hashmap. Le Hashmap contient un des produits commandés, et le nombre de ce produit commandé.
+    private ArrayList<HashMap<Produits, Integer>> produits;
+    public Commande(int table, ArrayList<HashMap<Produits, Integer>> produits) {
+        this.table = table;
         this.produits = produits;
     }
 }

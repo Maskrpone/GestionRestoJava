@@ -1,11 +1,12 @@
 package org.example;
 
+import java.lang.reflect.Array;
+import java.util.Map;
+
 public class Employe {
     private final String nom;
     private final String prenom;
     private final int salaire;
-    private final String poste;
-
     private int jours_travailles;
 
     public void setJours_travailles(int jours_travailles) {
@@ -16,11 +17,10 @@ public class Employe {
         return jours_travailles;
     }
 
-    public Employe(String nom, String prenom, int salaire, String poste) {
+    public Employe(String nom, String prenom, int salaire) {
         this.nom = nom;
         this.prenom = prenom;
         this.salaire = salaire;
-        this.poste = poste;
         this.jours_travailles = 0;
     }
 
@@ -34,9 +34,6 @@ public class Employe {
 
     public int getSalaire() {
         return salaire;
-    }
-    public String getPoste() {
-        return poste;
     }
 
 }

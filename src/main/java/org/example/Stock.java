@@ -9,7 +9,7 @@ public class Stock {
     public HashMap<String, Integer> getStock() {
         return stock;
     }
-    public getStock(String ingredient) {
+    public int getStock(String ingredient) {
         return stock.get(ingredient);
     }
     public void useStock(String ingredient, int quantity) {
