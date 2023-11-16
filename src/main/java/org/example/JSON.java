@@ -1,16 +1,17 @@
 package org.example;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.FileUtils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Files.write;
 
 public class JSON {
     public void writeFile(String filename, String content) {
@@ -51,21 +52,28 @@ public class JSON {
             System.err.println("Caught IOException: " + e.getMessage());
         }
     }
-    public void ecritureStock(Map<Ingredients, Integer> stockToWrite) {
-        // Convertir la carte currentStock en un objet JSON
-        JSONObject jsonStock = new JSONObject(stockToWrite);
+    public void writeFullStock(Map<Ingredients, Integer> ingredientsMap, String fileName) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            JSONArray jsonArray = new JSONArray();
 
-        // Écrire le JSON dans un fichier
-        try {
-            // Spécifiez le chemin du fichier JSON
-            String filePath = "Stock.json";
+            for (Map.Entry<Ingredients, Integer> entry : ingredientsMap.entrySet()) {
+                Ingredients ingredient = entry.getKey();
+                int quantity = entry.getValue();
 
-            // Écrivez le contenu JSON dans le fichier
-            FileUtils.writeStringToFile(new File(filePath), jsonStock.toString(), StandardCharsets.UTF_8);
+                JSONObject ingredientJson = new JSONObject();
+                ingredientJson.put("nom", ingredient.getNom());
+                ingredientJson.put("quantite", quantity);
+                ingredientJson.put("prix", ingredient.getPrice());
 
-            System.out.println("Le stock a été sauvegardé dans le fichier : " + filePath);
+                JSONObject entryJson = new JSONObject();
+                entryJson.put(ingredient.getNom(), ingredientJson);
+
+                jsonArray.put(entryJson);
+            }
+
+            fileWriter.write(jsonArray.toString());
         } catch (IOException e) {
-            System.err.println("Erreur lors de l'écriture du fichier JSON : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

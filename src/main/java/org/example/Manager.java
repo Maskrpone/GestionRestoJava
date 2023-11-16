@@ -119,7 +119,7 @@ public class Manager extends Employe {
                 System.out.println("Numéro invalide. Aucune modification effectuée.");
             }
         }
-        j.ecritureStock(currentStock);
+        j.writeFullStock(currentStock, "Stock.json");
         return quantitiesAdded;
     }
 

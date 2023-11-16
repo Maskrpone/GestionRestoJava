@@ -1,1 +1,1 @@
-{"Ingredients":{"nom":"Patate", "price":2},"quantite":8,"Ingredients{nom:'Steak', price:4}":3,"Ingredients{nom:'Tomate', price:1}":10}
+[{"Patate":{"prix":2,"nom":"Patate","quantite":8}},{"Tomate":{"prix":1,"nom":"Tomate","quantite":10}},{"Steak":{"prix":4,"nom":"Steak","quantite":3}}]
