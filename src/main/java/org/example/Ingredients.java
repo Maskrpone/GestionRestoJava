@@ -24,4 +24,12 @@ public class Ingredients {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Ingredients{" +
+                "nom:'" + nom + '\'' +
+                ", price:" + price +
+                '}';
+    }
 }

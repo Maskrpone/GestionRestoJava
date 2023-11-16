@@ -2,9 +2,13 @@ package org.example;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.FileUtils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import static java.nio.file.Files.*;
 
@@ -45,6 +49,23 @@ public class JSON {
             write(path, o.toString().getBytes());
         } catch (IOException e) {
             System.err.println("Caught IOException: " + e.getMessage());
+        }
+    }
+    public void ecritureStock(Map<Ingredients, Integer> stockToWrite) {
+        // Convertir la carte currentStock en un objet JSON
+        JSONObject jsonStock = new JSONObject(stockToWrite);
+
+        // Écrire le JSON dans un fichier
+        try {
+            // Spécifiez le chemin du fichier JSON
+            String filePath = "Stock.json";
+
+            // Écrivez le contenu JSON dans le fichier
+            FileUtils.writeStringToFile(new File(filePath), jsonStock.toString(), StandardCharsets.UTF_8);
+
+            System.out.println("Le stock a été sauvegardé dans le fichier : " + filePath);
+        } catch (IOException e) {
+            System.err.println("Erreur lors de l'écriture du fichier JSON : " + e.getMessage());
         }
     }
 }
