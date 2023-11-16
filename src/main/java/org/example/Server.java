@@ -8,7 +8,7 @@ public class Server extends Employe{
         super(nom, prenom, salaire);
     }
 
-    public void addCommande(int table, HashMap<String, int> boissons, HashMap<String, int> repas) {
+    public void addCommande(int table, HashMap<String, Integer> boissons, HashMap<String, Integer> repas) {
 
     }
 
