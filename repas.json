@@ -1,0 +1,69 @@
+{
+  "burger": {
+    "ingredients": [
+      "pain",
+      "salade",
+      "tomate",
+      "steak"
+    ],
+    "prix": 15,
+    "preparation": 10
+  },
+  "burger-sans-tomate": {
+    "ingredients": [
+      "pain",
+      "salade",
+      "steak"
+    ],
+    "prix": 15,
+    "preparation": 10
+  },
+  "burger-viande": {
+    "ingredients": [
+      "pain",
+      "steak"
+    ],
+    "prix": 15,
+    "preparation": 10
+  },
+  "salade-tomate": {
+    "ingredients": ["salade", "tomate"],
+    "prix": 9,
+    "preparation": 5
+  },
+  "salade": {
+    "ingredients": ["salade"],
+    "prix": 9,
+    "preparation": 5
+  },
+  "potage-oignon": {
+    "ingredients": ["oignon", "oignon", "oignon"],
+    "prix": 8,
+    "preparation": 10
+  },
+  "potage-tomate": {
+    "ingredients": ["tomate","tomate","tomate"],
+    "prix":8,
+    "preparation": 10
+  },
+  "potage-champignon": {
+    "ingredients": ["champignon","champignon", "champignon"],
+    "prix": 8,
+    "preparation": 10
+  },
+  "pizza-fromage": {
+    "ingredients": ["pate", "tomate", "fromage"],
+    "prix": 12,
+    "preparation": 20
+  },
+  "pizza-fromage-champignon": {
+    "ingredients": ["pate", "tomate", "fromage", "champignon"],
+    "prix": 12,
+    "preparation": 20
+  },
+  "pizza-pepperoni": {
+    "ingredients": ["pate","tomate","fromage","pepperoni"],
+    "prix": 12,
+    "preparation": 20
+  }
+}
