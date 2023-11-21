@@ -1,36 +1,95 @@
 package org.example;
-import java.util.HashMap;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import java.util.ArrayList;
 
 public class Stock {
-    private HashMap<Ingredients, Integer> stock;
+    private ArrayList<Ingredients> stock;
 
     //region Constructor
+    /**
+     * Constructeur de la classe stock, s'initialisant avec une désérialisation.
+     * Chaque ingrédient a son fichier .ser
+     * @author Hippolyte
+     * @serialData les fichiers de chaque ingrédients
+     */
     public Stock() {
-        this.stock = new HashMap<Ingredients, Integer>();
+        this.stock = new ArrayList<>();
+        // tableau contenant tous les ingrédients
+        String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
+        // pour chaque ingrédient du tableau on va récupérer l'objet dans son fichier .ser et on l'insert dans le stock
+        for (String s : liste_ingredient) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(s))) {
+                Ingredients ing = (Ingredients) ois.readObject();
+                this.stock.add(ing);
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Impossible de lire : " + e);
+            }
+        }
     }
     //endregion
 
     //region Getter
-    public HashMap<Ingredients, Integer> getStock() {
-        return stock;
+
+    /**
+     * Obtenir la quantité d'un ingrédient dans le stock
+     * @author Hippolyte
+     * @param ingredient le nom de l'ingrédient
+     * @return Integer, la quantité de cet ingrédient encore dans le stock
+     */
+    public int getIngredient(String ingredient) {
+        for (Ingredients it : this.stock) {
+            if (it.getNom().equals(ingredient)) {
+                return it.getNb();
+            }
+        }
+        return 0; // on renvoie 0 si l'on n'a pas trouvé l'objet dans notre stock
     }
-    public int getStock(String ingredient) {
-        return stock.get(ingredient);
+
+    /**
+     * Obtenir l'objet Ingredients de l'ingrédient que l'on désire
+     * @param ingredient le nom de l'ingrédient que l'on souhaite obtenir
+     * @return objet Ingredients
+     */
+    public Ingredients getObjIngredient(String ingredient) {
+        for (Ingredients it : this.stock) {
+            if (it.getNom().equals(ingredient)) {
+               return it;
+            }
+        }
+        return new Ingredients();
     }
 
     //endregion
-    /*
+
+    //region Setter
+    /**
+     * Cette fonction est utilisée pour retirer la quantité d'ingrédient que nous utilisons des stocks
+     * @author Hippolyte
+     * @param ingredient le nom de l'ingrédient
+     * @param quantity la quantité utilisée et à retirer
+     */
     public void useStock(String ingredient, int quantity) {
-        if (stock.containsKey(ingredient)) {
-            stock.put(ingredient, stock.get(ingredient) - quantity);
-        } else {
-            stock.put(ingredient, quantity);
+        for (Ingredients it : this.stock) {
+            if (it.getNom().equals(ingredient)) {
+                it.setNb(it.getNb() - quantity);
+            }
         }
     }
-*/
-    //region Setter
-    public void setStock(HashMap<Ingredients, Integer> _stock) {
+
+    public void setStock(ArrayList<Ingredients> _stock) {
         this.stock = _stock;
+    }
+
+    public void setIngredient(String nom, int quantity) {
+        for (Ingredients it : this.stock) {
+            if (it.getNom().equals(nom)) {
+                it.setNb(quantity);
+            }
+        }
     }
 
     //endregion
