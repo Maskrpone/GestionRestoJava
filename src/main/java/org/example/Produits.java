@@ -4,15 +4,13 @@ import java.util.HashMap;
 
 public class Produits {
     private final String nom;
-    private final int price;
-    private boolean estfini;
+    private final int prix;
     private final HashMap<String, Integer> ingredients;
 
-    public Produits(String nom, int price, HashMap<String, Integer> ingredients) {
+    public Produits(String nom, int prix, HashMap<String, Integer> ingredients) {
         this.nom = nom;
-        this.price = price;
+        this.prix = prix;
         this.ingredients = ingredients;
-        this.estfini = false;
     }
 
     public String getNom() {
@@ -20,7 +18,7 @@ public class Produits {
     }
 
     public int getPrice() {
-        return price;
+        return prix;
     }
 
     public HashMap<String, Integer> getIngredients() {

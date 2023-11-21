@@ -8,6 +8,7 @@ public class Employe {
     private final String prenom;
     private final int salaire;
     private int jours_travailles;
+    private String poste;
 
     public void setJours_travailles(int jours_travailles) {
         this.jours_travailles = jours_travailles;
@@ -17,11 +18,12 @@ public class Employe {
         return jours_travailles;
     }
 
-    public Employe(String nom, String prenom, int salaire) {
+    public Employe(String nom, String prenom, int salaire, String poste) {
         this.nom = nom;
         this.prenom = prenom;
         this.salaire = salaire;
         this.jours_travailles = 0;
+        this.poste = poste;
     }
 
     public String getNom() {
