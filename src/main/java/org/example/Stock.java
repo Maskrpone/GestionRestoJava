@@ -63,6 +63,10 @@ public class Stock {
         return new Ingredients();
     }
 
+    public ArrayList<Ingredients> getStock() {
+        return stock;
+    }
+
     //endregion
 
     //region Setter
@@ -91,6 +95,7 @@ public class Stock {
             }
         }
     }
+
 
     //endregion
 }

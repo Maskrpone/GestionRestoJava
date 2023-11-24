@@ -46,4 +46,11 @@ public class Ingredients implements Serializable {
                 ", price:" + price +
                 '}';
     }
+
+    //region Methode
+    public void addNb(int nbToAdd){
+        this.setNb(this.getNb() + nbToAdd);
+    }
+
+    //endregion
 }

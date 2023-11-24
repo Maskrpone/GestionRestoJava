@@ -54,36 +54,46 @@ public class Manager extends Employe {
 
     //region Methode
     public void finJournee() {}
-    public Map<Ingredients, Integer> ingredientsACommanderRapide() {
+
+    /**
+     * @author Thibaut
+     * @param stockLow Valeur minimale dans stock
+     * @param stockFull Valeur de stock full
+     * @return Le prix total à payer
+     */
+    public int ingredientsACommanderRapide(int stockLow, int stockFull) {
         Map<Ingredients, Integer> ingredientsACommander = new HashMap<>();
         int priceToPay = 0;
 
-        for (Map.Entry<Ingredients, Integer> entry : stock.getStock().entrySet()) {
-            Ingredients ingredient = entry.getKey();
-            if (entry.getValue() <= 10) {
-                int quantiteAAcheter = 50 - entry.getValue();
+        for (Ingredients ingredient : stock.getStock()) {
+            if (ingredient.getNb() <= stockLow) {
+                int quantiteAAcheter = stockFull - ingredient.getNb();
+                ingredient.setNb(stockFull);
                 priceToPay += quantiteAAcheter * ingredient.getPrice();
                 ingredientsACommander.put(ingredient, quantiteAAcheter);
             }
         }
-        System.out.println(priceToPay);
-        return ingredientsACommander;
+        System.out.println(ingredientsACommander);
+        return priceToPay;
     }
 
+
+    /**
+     * @author Thibaut
+     * @return La map d'ingrédient commandé avec la quantité
+     */
     public Map<Ingredients, Integer> consulterStock() {
-        Map<Ingredients, Integer> currentStock = stock.getStock();
+        ArrayList<Ingredients> currentStock = stock.getStock();
         Map<Ingredients, Integer> quantitiesAdded = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-        JSON j = new JSON();
 
         while (true) {
             int index = 1;
             System.out.println("Stock actuel :");
 
-            for (Map.Entry<Ingredients, Integer> entry : currentStock.entrySet()) {
-                Ingredients ingredient = entry.getKey();
-                int quantite = entry.getValue();
-                System.out.println(index + ". " + ingredient.getClass().getSimpleName() + ": " + quantite);
+            for (Ingredients ingredient : currentStock) {
+                int quantite = ingredient.getNb();
+                System.out.println(index + ". " + ingredient.getNom() + ": " + quantite);
                 index++;
             }
 
@@ -97,7 +107,7 @@ public class Manager extends Employe {
                 Ingredients selectedIngredient = null;
                 int currentIndex = 1;
 
-                for (Ingredients ingredient : currentStock.keySet()) {
+                for (Ingredients ingredient : currentStock) {
                     if (currentIndex == selectedNumber) {
                         selectedIngredient = ingredient;
                         break;
@@ -105,11 +115,11 @@ public class Manager extends Employe {
                     currentIndex++;
                 }
 
-                System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getClass().getSimpleName() + " : ");
+                System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getNom() + " : ");
                 int quantityToAdd = scanner.nextInt();
 
                 if (quantityToAdd > 0) {
-                    currentStock.put(selectedIngredient, currentStock.get(selectedIngredient) + quantityToAdd);
+                    selectedIngredient.addNb(quantityToAdd);
                     quantitiesAdded.put(selectedIngredient, quantityToAdd);
                     System.out.println("Stock mis à jour.");
                 } else {
@@ -119,8 +129,26 @@ public class Manager extends Employe {
                 System.out.println("Numéro invalide. Aucune modification effectuée.");
             }
         }
-        j.writeFullStock(currentStock, "Stock.json");
         return quantitiesAdded;
+    }
+
+
+    /**
+     * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une map
+     * @author Thibaut
+     * @return Le prix de l'augmentation stock
+     */
+    public int consulterStockPriceToPay(){
+        Map<Ingredients, Integer> ingredientAchetes = new HashMap<>();
+        ingredientAchetes = consulterStock();
+        int priceToPay = 0;
+
+        for(Map.Entry<Ingredients, Integer> entry : ingredientAchetes.entrySet()){
+            Ingredients ingredient = entry.getKey();
+            priceToPay += ingredient.getPrice()*entry.getValue();
+        }
+
+        return priceToPay;
     }
 
     //endregion
