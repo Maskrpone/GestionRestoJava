@@ -15,6 +15,7 @@ public class Produits {
         this.estfini = false;
     }
 
+    //region Getter
     public String getNom() {
         return nom;
     }
@@ -27,4 +28,5 @@ public class Produits {
         return ingredients;
     }
 
+    //endregion
 }
