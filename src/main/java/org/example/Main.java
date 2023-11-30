@@ -33,7 +33,7 @@ public class Main {
         i8.ecritureFichier(true);
         */
 
-        /*
+
         Boisson b = new Boisson("limonade", 4, 20);
         Boisson b1 = new Boisson("cidre_doux", 5, 20);
         Boisson b2 = new Boisson("biere_sans_alcool", 5, 20);
@@ -44,7 +44,7 @@ public class Main {
         b2.ecritureFichier(true);
         b3.ecritureFichier(true);
         b4.ecritureFichier(true);
-        */
+
 
         /*
         HashMap<String, Integer> ingredients = new HashMap<>();
