@@ -12,12 +12,12 @@ public class Manager extends Employe {
 
     //region Constructor
     public Manager(String nom, String prenom, int salaire,String poste) {
-        super(nom, prenom, salaire);
-        this.employes = new HashMap<String, ArrayList<Employe>>();
+        super(nom, prenom, salaire, poste);
+        this.employes = new HashMap<>();
     }
     public Manager(String nom, String prenom, int salaire,String poste , Stock _stock) {
-        super(nom, prenom, salaire);
-        this.employes = new HashMap<String, ArrayList<Employe>>();
+        super(nom, prenom, salaire, poste);
+        this.employes = new HashMap<>();
         this.stock = _stock;
     }
     //endregion
@@ -77,7 +77,6 @@ public class Manager extends Employe {
         return priceToPay;
     }
 
-
     /**
      * @author Thibaut
      * @return La map d'ingrédient commandé avec la quantité
@@ -115,6 +114,7 @@ public class Manager extends Employe {
                     currentIndex++;
                 }
 
+                assert selectedIngredient != null;
                 System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getNom() + " : ");
                 int quantityToAdd = scanner.nextInt();
 
@@ -139,7 +139,7 @@ public class Manager extends Employe {
      * @return Le prix de l'augmentation stock
      */
     public int consulterStockPriceToPay(){
-        Map<Ingredients, Integer> ingredientAchetes = new HashMap<>();
+        Map<Ingredients, Integer> ingredientAchetes;
         ingredientAchetes = consulterStock();
         int priceToPay = 0;
 

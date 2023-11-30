@@ -10,44 +10,25 @@ public class Produits {
     private int tempsPrep;
     private final HashMap<String, Integer> ingredients;
 
-    public Produits(String nom, int price, HashMap<String, Integer> ingredient, int tempsPrep) {
+    public Produits(String nom, int price, int tempsPrep, HashMap<String, Integer> ingredients) {
         this.nom = nom;
         this.price = price;
-        this.ingredients = ingredient;
-        this.tempsPrep = tempsPrep;
+        this.ingredients = ingredients;
         this.estfini = false;
     }
+    //endregion
 
-    //region Getter
+    //region Getters
     public String getNom() {
         return nom;
     }
 
     public int getPrice() {
-        return price;
+        return prix;
     }
 
     public HashMap<String, Integer> getIngredients() {
         return ingredients;
     }
-
     //endregion
-
-    //region Setter
-
-    public void setEstfini(boolean estfini) {
-        this.estfini = estfini;
-    }
-
-    //endregion
-
-    @Override
-    public String toString() {
-        return "Plat{" +
-                "name='" + nom + '\'' +
-                ", ingredients=" + ingredients +
-                ", price=" + price +
-                '}';
-    }
-
 }

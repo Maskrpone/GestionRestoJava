@@ -1,48 +1,37 @@
 package org.example;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Commande {
-    private int table;
+    private final int table;
+    private final ArrayList<Produits> repas;
+    private final ArrayList<Produits> boissons;
     private boolean enPreparation;
-    // Tableau contenant plusieurs Hashmap. Le Hashmap contient un des produits commandés, et le nombre de ce produit commandé.
-    private ArrayList<HashMap<Produits, Integer>> produits;
 
-    public Commande(int table, ArrayList<HashMap<Produits, Integer>> produits) {
+
+    //region Constructor
+    public Commande(int table, ArrayList<Produits> boissons, ArrayList<Produits> repas) {
         this.table = table;
-        this.produits = produits;
+        this.boissons = boissons;
+        this.repas = repas;
+        this.enPreparation = false;
     }
+    //endregion
 
-    //region Getter
-
+    //region getters
     public int getTable() {
         return table;
     }
 
-    public boolean isEnPreparation() {
-        return enPreparation;
+    public ArrayList<Produits> getRepas() {
+        return repas;
     }
 
-    public ArrayList<HashMap<Produits, Integer>> getProduits() {
-        return produits;
+    public ArrayList<Produits> getBoissons() {
+        return boissons;
     }
-
     //endregion
 
-    //region Setter
-
-    public void setTable(int table) {
-        this.table = table;
+    public void setEnPreparation(boolean b) {
+        this.enPreparation = b;
     }
-
-    public void setEnPreparation(boolean enPreparation) {
-        this.enPreparation = enPreparation;
-    }
-
-    public void setProduits(ArrayList<HashMap<Produits, Integer>> produits) {
-        this.produits = produits;
-    }
-
-    //endregion
 }

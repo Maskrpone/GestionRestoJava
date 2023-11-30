@@ -1,33 +1,28 @@
 package org.example;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        //Employe e = new Employe("Doe", "John", 1000, "Serveur");
-        Stock s = new Stock();
-        ArrayList<Ingredients> stock = new ArrayList<>();
+    public static void main(String[] args) {
+        Serveur serveur = new Serveur("Doe", "John", 1200, "serveur");
 
-        Ingredients i1 = new Ingredients("Tomate", 1, 10);
-        Ingredients i2 = new Ingredients("Patate", 2, 10);
-        Ingredients i3 = new Ingredients("Steak", 4, 10);
-        stock.add(i1);
-        stock.add(i2);
-        stock.add(i3);
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("limonade", 1);
+        Produits limonade = new Produits("Limonade",5,ingredients);
+        ArrayList<Produits> boissons = new ArrayList<>();
 
-        s.setStock(stock);
-        Manager m = new Manager("Doe", "Jane", 2000, "Manager", s );
-        Menu menu = new Menu();
+        HashMap<String, Integer> ingredients_repas = new HashMap<>();
+        ingredients_repas.put("pain", 1);
+        ingredients_repas.put("tomate", 1);
+        ingredients_repas.put("salade", 1);
+        ingredients_repas.put("steak", 1);
 
         ArrayList<HashMap<Produits, Integer>> produits;
         produits.add(menu.);
         Cuisinier c = new Cuisinier("Philippe", "Philippe", 13, "cuisinier");
         c.cuisinerCommande();
 
+        serveur.addCommande(15,boissons,repas);
     }
 }
 
