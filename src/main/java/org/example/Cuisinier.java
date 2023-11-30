@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cuisinier extends Preparateur{
-    private Menu menu;
+    private final Menu menu;
 
     //region Constructor
     public Cuisinier(String nom, String prenom, int salaire, String poste) {
@@ -29,6 +29,7 @@ public class Cuisinier extends Preparateur{
 
     //region Methode
     public void cuisinerCommande(Commande commande) {
+        Stock stock = new Stock();
         System.out.println("Cuisinier en train de préparer la commande pour la table " + commande.getTable());
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande

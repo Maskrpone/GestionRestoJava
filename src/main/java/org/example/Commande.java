@@ -1,14 +1,11 @@
 package org.example;
-
-import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class Commande {
     private final int table;
     private final ArrayList<Produits> repas;
     private final ArrayList<Produits> boissons;
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final SecureRandom secureRandom = new SecureRandom();
+    private boolean enPreparation;
 
 
     //region Constructor
@@ -16,6 +13,7 @@ public class Commande {
         this.table = table;
         this.boissons = boissons;
         this.repas = repas;
+        this.enPreparation = false;
     }
     //endregion
 
@@ -32,4 +30,8 @@ public class Commande {
         return boissons;
     }
     //endregion
+
+    public void setEnPreparation(boolean b) {
+        this.enPreparation = b;
+    }
 }
