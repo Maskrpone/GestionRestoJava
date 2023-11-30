@@ -23,10 +23,10 @@ public class Main {
         Manager m = new Manager("Doe", "Jane", 2000, "Manager", s );
         Menu menu = new Menu();
 
-
-        for (Boisson p : menu.getCarteBoisson()) {
-            System.out.println(p);
-        }
+        ArrayList<HashMap<Produits, Integer>> produits;
+        produits.add(menu.);
+        Cuisinier c = new Cuisinier("Philippe", "Philippe", 13, "cuisinier");
+        c.cuisinerCommande();
 
     }
 }

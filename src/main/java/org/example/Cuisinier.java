@@ -38,12 +38,12 @@ public class Cuisinier extends Preparateur{
 
                 // Trouver le temps de préparation du plat dans le menu
                 int tempsPrep = trouverTempsPreparation(produit);
-                for (Map.Entry<String, Integer> entry : produit.getIngredients().entrySet()){
 
-                }
+                //Supprimer des stocks
+                supprimerDesStocks(produit.getIngredients());
+
                 // Simuler la cuisson en attente du temps de préparation
                 attendre(tempsPrep);
-
 
                 System.out.println("Plat " + produit.getNom() + " prêt pour la table " + commande.getTable() + " (Quantité: " + quantite + ")");
             }
@@ -52,6 +52,11 @@ public class Cuisinier extends Preparateur{
         System.out.println("Commande pour la table " + commande.getTable() + " est prête !");
     }
 
+    /**
+     * Trouve le temps d'attente du plat à partir de la classe menu
+     * @param produit temps d'attente du produit cherché
+     * @return temps d'attente
+     */
     private int trouverTempsPreparation(Produits produit){
         for(Plat p : menu.getCartePlat()){
             if(p.getName().equals(produit.getNom())){
@@ -61,6 +66,10 @@ public class Cuisinier extends Preparateur{
         return -1;
     }
 
+    /**
+     * Permet au thread d'attendre le temps de la preparation
+     * @param tempsAttente temps d'attente pour le plat
+     */
     private void attendre(int tempsAttente) {
         try {
             // Simuler l'attente en millisecondes (vous pouvez ajuster cette logique en fonction de vos besoins)
@@ -70,9 +79,14 @@ public class Cuisinier extends Preparateur{
         }
     }
 
-    private void supprimerDesStocks(HashMap<String, Integer> ingredients, Stock stock){
+    /**
+     * Supprime des stocks les ingredients de la HashMap
+     * @param ingredients ingredient qui sont utilises
+     */
+    private void supprimerDesStocks(HashMap<String, Integer> ingredients){
+        Stock stock = new Stock();
         for(Map.Entry<String, Integer> entry : ingredients.entrySet()){
-
+            stock.useStock(entry.getKey(), entry.getValue());
         }
     }
 
