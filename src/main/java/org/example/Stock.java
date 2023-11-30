@@ -1,6 +1,8 @@
 package org.example;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import java.util.ArrayList;
 
@@ -62,7 +64,7 @@ public class Stock {
     }
 
     public ArrayList<Ingredients> getStock() {
-        return this.stock;
+        return stock;
     }
 
     //endregion
@@ -86,33 +88,11 @@ public class Stock {
         this.stock = _stock;
     }
 
-    /**
-     * Modifie la quantité d'un ingrédient dans le stock
-     * @author Hippolyte
-     * @param nom nom de l'ingrédient
-     * @param quantity quantité de l'ingrédient À INSCRIRE
-     */
     public void setIngredient(String nom, int quantity) {
         for (Ingredients it : this.stock) {
             if (it.getNom().equals(nom)) {
                 it.setNb(quantity);
-                System.out.println("Quantité de " + it.getNom() + " -> " + it.getNb()); // log
             }
-        }
-    }
-
-    public void saveStock() {
-        String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
-        int i = 0;
-        for (Ingredients it : this.stock) {
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(liste_ingredient[i]))) {
-                oos.writeObject(it);
-                System.out.println(it.getNom() + " sauvegardé..."); // log
-            } catch (IOException e) {
-                System.out.println("Impossible d'écrire : " + e);
-            }
-            i++;
-            System.out.println("Stock sauvegardé.");
         }
     }
 

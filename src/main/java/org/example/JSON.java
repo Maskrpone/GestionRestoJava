@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
@@ -75,5 +76,14 @@ public class JSON {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Fonction pour convertir un JSONArray en ArrayList<String>
+    public ArrayList<String> jsonArrayToList(JSONArray jsonArray) {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getString(i));
+        }
+        return list;
     }
 }
