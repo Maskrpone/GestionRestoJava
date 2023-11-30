@@ -1,14 +1,16 @@
 package org.example;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Serveur serveur = new Serveur("Doe", "John", 1200, "serveur");
 
-        HashMap<String, Integer> ingredients = new HashMap<>();
-        ingredients.put("limonade", 1);
-        Produits limonade = new Produits("Limonade",5, ingredients);
+        /*
+        ArrayList<String> ingredients = new ArrayList<>();
+        ingredients.add("limonade");
+        Produits limonade = new Produits("Limonade",5, ingredients, 2);
         ArrayList<Produits> boissons = new ArrayList<>();
 
         HashMap<String, Integer> ingredients_repas = new HashMap<>();
@@ -17,12 +19,21 @@ public class Main {
         ingredients_repas.put("salade", 1);
         ingredients_repas.put("steak", 1);
 
+        Menu menu = new Menu();
+
         ArrayList<HashMap<Produits, Integer>> produits;
-        produits.add(menu.);
+        produits.add(menu.getCartePlat());
         Cuisinier c = new Cuisinier("Philippe", "Philippe", 13, "cuisinier");
         c.cuisinerCommande();
 
-        serveur.addCommande(15,boissons,repas);
+        serveur.addCommande(15,boissons, repas);
+
+         */
+
+        Menu menu = new Menu();
+        System.out.println(menu.getCartePlat());
+        System.out.println(menu.getCarteBoisson());
+
     }
 }
 

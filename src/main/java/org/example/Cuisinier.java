@@ -55,8 +55,8 @@ public class Cuisinier extends Preparateur{
      * @return temps d'attente
      */
     private int trouverTempsPreparation(Produits produit){
-        for(Plat p : menu.getCartePlat()){
-            if(p.getName().equals(produit.getNom())){
+        for(Produits p : menu.getCartePlat()){
+            if(p.getNom().equals(produit.getNom())){
                 return p.getTempsPrep();
             }
         }

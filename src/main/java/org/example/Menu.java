@@ -5,11 +5,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class Menu {
-    private ArrayList<Plat> cartePlat;
+    private ArrayList<Produits> cartePlat;
     private ArrayList<Boisson> carteBoisson;
 
 
@@ -34,12 +35,15 @@ public class Menu {
             JSONObject platData = menuObject.getJSONObject(platNom);
 
             // Créer une instance de Plat avec les données du plat actuel
-            Plat plat = new Plat(
+            Produits plat = new Produits(
                     platNom,
-                    j.jsonArrayToList(platData.getJSONArray("ingredients")),
                     platData.getInt("prix"),
+                    new HashMap<>(),
                     platData.getInt("preparation")
             );
+
+            // Mettre à jour la liste des ingrédients en fonction du JSON
+            plat.updateIngredientsList(platData.getJSONArray("ingredients"));
 
             // Ajouter le plat à la liste
             cartePlat.add(plat);
@@ -62,7 +66,7 @@ public class Menu {
 
     //region Getter
 
-    public ArrayList<Plat> getCartePlat() {
+    public ArrayList<Produits> getCartePlat() {
         return cartePlat;
     }
 
