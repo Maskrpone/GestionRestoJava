@@ -8,7 +8,7 @@ public class Main {
 
         HashMap<String, Integer> ingredients = new HashMap<>();
         ingredients.put("limonade", 1);
-        Produits limonade = new Produits("Limonade",5,ingredients);
+        Produits limonade = new Produits("Limonade",5, ingredients);
         ArrayList<Produits> boissons = new ArrayList<>();
 
         HashMap<String, Integer> ingredients_repas = new HashMap<>();

@@ -7,10 +7,9 @@ public class Produits {
     private final String nom;
     private final int price;
     private boolean estfini;
-    private int tempsPrep;
     private final HashMap<String, Integer> ingredients;
 
-    public Produits(String nom, int price, int tempsPrep, HashMap<String, Integer> ingredients) {
+    public Produits(String nom, int price, HashMap<String, Integer> ingredients) {
         this.nom = nom;
         this.price = price;
         this.ingredients = ingredients;
