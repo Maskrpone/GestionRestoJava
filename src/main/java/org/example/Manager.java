@@ -72,7 +72,7 @@ public class Manager extends Employe {
                 ingredient.setNb(stockFull);
                 priceToPay += quantiteAAcheter * ingredient.getPrice();
                 ingredientsACommander.put(ingredient, quantiteAAcheter);
-                ingredient.ecritureFichier();
+                ingredient.ecritureFichier(false);
             }
         }
         System.out.println(ingredientsACommander);
@@ -81,7 +81,7 @@ public class Manager extends Employe {
 
     /**
      * @author Thibaut
-     * @return La map d'ingrédient commandé avec la quantité
+     * @return La map d'ingrédient commandés avec la quantité
      */
     public Map<Ingredients, Integer> consulterStock() {
         ArrayList<Ingredients> currentStock = stock.getStock();
@@ -123,7 +123,7 @@ public class Manager extends Employe {
                 if (quantityToAdd > 0) {
                     selectedIngredient.addNb(quantityToAdd);
                     quantitiesAdded.put(selectedIngredient, quantityToAdd);
-                    selectedIngredient.ecritureFichier();
+                    selectedIngredient.ecritureFichier(false);
                     System.out.println("Stock mis à jour.");
                 } else {
                     System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");

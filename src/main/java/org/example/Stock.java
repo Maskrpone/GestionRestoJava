@@ -19,6 +19,7 @@ public class Stock {
      */
     public Stock() {
         this.stock = new ArrayList<>();
+        // Nom du dossier
         String dossier = "Produits";
         // tableau contenant tous les ingrédients
         String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
@@ -83,7 +84,7 @@ public class Stock {
         for (Ingredients it : this.stock) {
             if (it.getNom().equals(ingredient)) {
                 it.setNb(it.getNb() - quantity);
-                it.ecritureFichier();
+                it.ecritureFichier(false);
             }
         }
     }

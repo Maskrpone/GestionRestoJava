@@ -64,14 +64,21 @@ public class Ingredients implements Serializable {
         }
     }
 
-    public void ecritureFichier(){
+    /**
+     * Ecrit la classe dans fichier .ser
+     * @param printConsole debug ou non
+     */
+    public void ecritureFichier(Boolean printConsole){
         final String nom_dossier = "Produits/";
         String nomFichier = this.getNom() + ".ser";
         String cheminFichier = nom_dossier + nomFichier;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cheminFichier))) {
             oos.writeObject(this);
-            System.out.println("L'ingrédient " + this.getNom() + "est maintenant ajouté");
+            if(printConsole)
+                System.out.println("L'ingrédient " + this.getNom() + " est maintenant ajouté");
+
+
         } catch (IOException e) {
             System.out.println("Impossible d'écrire : " + e);
         }
