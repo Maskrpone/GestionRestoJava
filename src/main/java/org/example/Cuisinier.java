@@ -2,6 +2,7 @@ package org.example;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Cuisinier extends Preparateur{
     private Menu menu;
@@ -37,7 +38,9 @@ public class Cuisinier extends Preparateur{
 
                 // Trouver le temps de préparation du plat dans le menu
                 int tempsPrep = trouverTempsPreparation(produit);
+                for (Map.Entry<String, Integer> entry : produit.getIngredients().entrySet()){
 
+                }
                 // Simuler la cuisson en attente du temps de préparation
                 attendre(tempsPrep);
 
@@ -67,8 +70,11 @@ public class Cuisinier extends Preparateur{
         }
     }
 
-    private void diminuerStocks (Produits produit){
-        
+    private void supprimerDesStocks(HashMap<String, Integer> ingredients, Stock stock){
+        for(Map.Entry<String, Integer> entry : ingredients.entrySet()){
+
+        }
     }
+
     //endregion
 }

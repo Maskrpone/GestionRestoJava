@@ -8,7 +8,7 @@ public class Produits {
     private boolean estfini;
     private final HashMap<String, Integer> ingredients;
 
-    public Produits(String nom, int price, HashMap<String, Integer> ingredients) {
+    public Produits(String nom, int price, int tempsPrep, HashMap<String, Integer> ingredients) {
         this.nom = nom;
         this.price = price;
         this.ingredients = ingredients;
@@ -29,4 +29,22 @@ public class Produits {
     }
 
     //endregion
+
+    //region Setter
+
+    public void setEstfini(boolean estfini) {
+        this.estfini = estfini;
+    }
+
+    //endregion
+
+    @Override
+    public String toString() {
+        return "Plat{" +
+                "name='" + nom + '\'' +
+                ", ingredients=" + ingredients +
+                ", price=" + price +
+                '}';
+    }
+
 }
