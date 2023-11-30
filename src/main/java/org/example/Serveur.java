@@ -23,18 +23,18 @@ Serveur extends Employe{
      * @param boissons tableau des boissons
      * @param repas tableau des repas
      */
-    public void addCommande(int table, ArrayList<Produits> boissons, ArrayList<Produits> repas) {
+    public void addCommande(int table, ArrayList<Boisson> boissons, ArrayList<Produits> repas) {
         int produit_impossible = 0;
-        for (Produits it : boissons) {
+        for (Boisson it : boissons) {
             if(inStock(it)) {
-                System.out.println("Nous pouvons produire " + it.getNom());
+                System.out.println("Nous pouvons produire " + it.getName());
             } else {
-                System.err.println("Nous ne pouvons pas produire " + it.getNom());
+                System.err.println("Nous ne pouvons pas produire " + it.getName());
                 produit_impossible++;
             }
         }
         for (Produits it : repas) {
-            if(inStock(it)) {
+            if (inStock(it)) {
                 System.out.println("Nous pouvons produire " + it.getNom());
             } else {
                 System.err.println("Nous ne pouvons pas produire " + it.getNom());
@@ -63,6 +63,18 @@ Serveur extends Employe{
             }
         }
         return true;
+    }
+
+    /**
+     * Fonction qui renvoie True si la boisson est disponible et False sinon.
+     * @author Hippolyte
+     * @param boisson   la boisson dont on veut vérifier la disponibilité
+     * @return  boolean
+     */
+
+    public boolean inStock(Boisson boisson) {
+        Stock stock = new Stock();
+        return stock.getIngredient(boisson.getName()) != 0;
     }
 
     /**
