@@ -24,7 +24,7 @@ public class Produits {
     }
 
     public int getPrice() {
-        return prix;
+        return price;
     }
 
     public HashMap<String, Integer> getIngredients() {

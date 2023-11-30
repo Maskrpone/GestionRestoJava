@@ -33,21 +33,17 @@ public class Cuisinier extends Preparateur{
         System.out.println("Cuisinier en train de préparer la commande pour la table " + commande.getTable());
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande
-        for (HashMap<Produits, Integer> platCommande : commande.getProduits()) {
-            for (Produits produit : platCommande.keySet()) {
-                int quantite = platCommande.get(produit);
+        for (Produits produit : commande.getRepas()) {
+            // Trouver le temps de préparation du plat dans le menu
+            int tempsPrep = trouverTempsPreparation(produit);
 
-                // Trouver le temps de préparation du plat dans le menu
-                int tempsPrep = trouverTempsPreparation(produit);
+            //Supprimer des stocks
+            supprimerDesStocks(produit.getIngredients());
 
-                //Supprimer des stocks
-                supprimerDesStocks(produit.getIngredients());
+            // Simuler la cuisson en attente du temps de préparation
+            attendre(tempsPrep);
 
-                // Simuler la cuisson en attente du temps de préparation
-                attendre(tempsPrep);
-
-                System.out.println("Plat " + produit.getNom() + " prêt pour la table " + commande.getTable() + " (Quantité: " + quantite + ")");
-            }
+            System.out.println("Plat " + produit.getNom() + " prêt pour la table " + commande.getTable());
         }
 
         System.out.println("Commande pour la table " + commande.getTable() + " est prête !");
