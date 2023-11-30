@@ -107,6 +107,17 @@ public class Stock {
         }
     }
 
+    public void useStockBoisson(Boisson boisson) {
+        for (Boisson it : this.getStockBoisson()){
+            if(it.getName().equals(boisson.getName())){
+                System.out.println(it.getNb());
+                it.setNb(it.getNb() - 1);
+                System.out.println(it.getNb());
+                it.ecritureFichier(true);
+            }
+        }
+    }
+
     public void setStock(ArrayList<Ingredients> _stock) {
         this.stock = _stock;
     }

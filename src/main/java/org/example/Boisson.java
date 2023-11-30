@@ -68,6 +68,7 @@ public class Boisson implements Serializable {
         return "Boisson{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
+                ", quantity=" + nb +
                 '}';
     }
 
@@ -86,6 +87,7 @@ public class Boisson implements Serializable {
             System.out.println("Impossible d'écrire : " + e);
         }
     }
+
 
     //endregion
 }

@@ -33,7 +33,7 @@ public class Main {
         i8.ecritureFichier(true);
         */
 
-
+        /*
         Boisson b = new Boisson("limonade", 4, 20);
         Boisson b1 = new Boisson("cidre_doux", 5, 20);
         Boisson b2 = new Boisson("biere_sans_alcool", 5, 20);
@@ -45,6 +45,7 @@ public class Main {
         b3.ecritureFichier(true);
         b4.ecritureFichier(true);
 
+         */
 
         /*
         HashMap<String, Integer> ingredients = new HashMap<>();
@@ -71,28 +72,6 @@ public class Main {
         //TODO: gérer l'exception lorsque les fichier .ser n'existent pas
         //TODO: faire en sorte d'avoir un stock par défaut (fonction qui init le stock pour le manager par ex)
 
-        /*
-        Ingredients i = new Ingredients("champignon", 1, 20);
-        Ingredients i1 = new Ingredients("fromage", 2, 20);
-        Ingredients i2 = new Ingredients("oignon", 1, 20);
-        Ingredients i3 = new Ingredients("pain", 1, 20);
-        Ingredients i4 = new Ingredients("patate", 1, 20);
-        Ingredients i5 = new Ingredients("salade", 1, 20);
-        Ingredients i6 = new Ingredients("saucisse", 2, 20);
-        Ingredients i7 = new Ingredients("steak", 3, 20);
-        Ingredients i8 = new Ingredients("tomate", 1, 20);
-        i.ecritureFichier();
-        i1.ecritureFichier();
-        i2.ecritureFichier();
-        i3.ecritureFichier();
-        i4.ecritureFichier();
-        i5.ecritureFichier();
-        i6.ecritureFichier();
-        i7.ecritureFichier();
-        i8.ecritureFichier();
-
-         */
-
         ArrayList<HashMap<Produits, Integer>> produits;
         ArrayList<Produits> plat = new ArrayList<>();
         ArrayList<Boisson> boisson = new ArrayList<>();
@@ -100,13 +79,21 @@ public class Main {
         plat.add(menu.getCartePlat().get(2));
         plat.add(menu.getCartePlat().get(5));
         plat.add(menu.getCartePlat().get(6));
+        boisson.add(menu.getCarteBoisson().get(1));
+        boisson.add(menu.getCarteBoisson().get(2));
+        boisson.add(menu.getCarteBoisson().get(3));
+        System.out.println(menu.getCarteBoisson().get(1));
+        System.out.println(menu.getCarteBoisson().get(2));
+        System.out.println(menu.getCarteBoisson().get(3));
         Commande commande = new Commande(12, boisson, plat);
         Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
+        Barman barman = new Barman("Bob", "Leponge", 2, "Cuisinier");
         //cuisinier.cuisinerCommande(commande);
+        barman.preparerBoisson(commande);
 
 
 
-        Manager m = new Manager("VDP", "Mathieu", 2, "manager");
+        Manager m = new Manager("VDP", "Aert", 2, "manager");
         m.consulterStockBoisson();
 
     }
