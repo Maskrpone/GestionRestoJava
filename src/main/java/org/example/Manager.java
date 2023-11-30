@@ -14,6 +14,7 @@ public class Manager extends Employe {
     public Manager(String nom, String prenom, int salaire,String poste) {
         super(nom, prenom, salaire, poste);
         this.employes = new HashMap<>();
+        this.stock = new Stock();
     }
     public Manager(String nom, String prenom, int salaire,String poste , Stock _stock) {
         super(nom, prenom, salaire, poste);
@@ -71,6 +72,7 @@ public class Manager extends Employe {
                 ingredient.setNb(stockFull);
                 priceToPay += quantiteAAcheter * ingredient.getPrice();
                 ingredientsACommander.put(ingredient, quantiteAAcheter);
+                ingredient.ecritureFichier();
             }
         }
         System.out.println(ingredientsACommander);
@@ -121,6 +123,7 @@ public class Manager extends Employe {
                 if (quantityToAdd > 0) {
                     selectedIngredient.addNb(quantityToAdd);
                     quantitiesAdded.put(selectedIngredient, quantityToAdd);
+                    selectedIngredient.ecritureFichier();
                     System.out.println("Stock mis à jour.");
                 } else {
                     System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");

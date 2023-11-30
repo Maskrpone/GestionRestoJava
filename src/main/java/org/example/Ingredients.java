@@ -1,5 +1,8 @@
 package org.example;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Ingredients implements Serializable {
@@ -58,6 +61,19 @@ public class Ingredients implements Serializable {
         } else {
             // Gérer le cas où la quantité demandée est supérieure à la quantité disponible
             System.out.println("Erreur : Quantité insuffisante d'ingrédient " + nom);
+        }
+    }
+
+    public void ecritureFichier(){
+        final String nom_dossier = "Produits/";
+        String nomFichier = this.getNom() + ".ser";
+        String cheminFichier = nom_dossier + nomFichier;
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cheminFichier))) {
+            oos.writeObject(this);
+            System.out.println("L'ingrédient " + this.getNom() + "est maintenant ajouté");
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire : " + e);
         }
     }
 

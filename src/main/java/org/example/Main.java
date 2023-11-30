@@ -5,34 +5,43 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Serveur serveur = new Serveur("Doe", "John", 1200, "serveur");
+
+        Menu menu = new Menu();
+        System.out.println(menu.getCartePlat().get(2));
 
         /*
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add("limonade");
-        Produits limonade = new Produits("Limonade",5, ingredients, 2);
-        ArrayList<Produits> boissons = new ArrayList<>();
-
-        HashMap<String, Integer> ingredients_repas = new HashMap<>();
-        ingredients_repas.put("pain", 1);
-        ingredients_repas.put("tomate", 1);
-        ingredients_repas.put("salade", 1);
-        ingredients_repas.put("steak", 1);
-
-        Menu menu = new Menu();
-
-        ArrayList<HashMap<Produits, Integer>> produits;
-        produits.add(menu.getCartePlat());
-        Cuisinier c = new Cuisinier("Philippe", "Philippe", 13, "cuisinier");
-        c.cuisinerCommande();
-
-        serveur.addCommande(15,boissons, repas);
+        Ingredients i = new Ingredients("champignon", 1, 20);
+        Ingredients i1 = new Ingredients("fromage", 2, 20);
+        Ingredients i2 = new Ingredients("oignon", 1, 20);
+        Ingredients i3 = new Ingredients("pain", 1, 20);
+        Ingredients i4 = new Ingredients("patate", 1, 20);
+        Ingredients i5 = new Ingredients("salade", 1, 20);
+        Ingredients i6 = new Ingredients("saucisse", 2, 20);
+        Ingredients i7 = new Ingredients("steak", 3, 20);
+        Ingredients i8 = new Ingredients("tomate", 1, 20);
+        i.ecritureFichier();
+        i1.ecritureFichier();
+        i2.ecritureFichier();
+        i3.ecritureFichier();
+        i4.ecritureFichier();
+        i5.ecritureFichier();
+        i6.ecritureFichier();
+        i7.ecritureFichier();
+        i8.ecritureFichier();
 
          */
+        /*
+        ArrayList<HashMap<Produits, Integer>> produits;
+        ArrayList<Produits> plat = new ArrayList<>();
+        plat.add(menu.getCartePlat().get(2));
+        Commande commande = new Commande(12, plat, plat);
+        Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
+        cuisinier.cuisinerCommande(commande);
 
-        Menu menu = new Menu();
-        System.out.println(menu.getCartePlat());
-        System.out.println(menu.getCarteBoisson());
+
+         */
+        Manager m = new Manager("VDP", "Mathieu", 2, "manager");
+        m.consulterStock();
 
     }
 }

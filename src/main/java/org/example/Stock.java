@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,11 +19,13 @@ public class Stock {
      */
     public Stock() {
         this.stock = new ArrayList<>();
+        String dossier = "Produits";
         // tableau contenant tous les ingrédients
         String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
         // pour chaque ingrédient du tableau on va récupérer l'objet dans son fichier .ser et on l'insert dans le stock
         for (String s : liste_ingredient) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(s))) {
+            String cheminFichier = dossier + File.separator + s;
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichier))) {
                 Ingredients ing = (Ingredients) ois.readObject();
                 this.stock.add(ing);
             } catch (IOException | ClassNotFoundException e) {
@@ -80,6 +83,7 @@ public class Stock {
         for (Ingredients it : this.stock) {
             if (it.getNom().equals(ingredient)) {
                 it.setNb(it.getNb() - quantity);
+                it.ecritureFichier();
             }
         }
     }
