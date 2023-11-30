@@ -1,14 +1,27 @@
 package org.example;
 
-public class Boisson {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Boisson implements Serializable {
     private String name;
     private int price;
+    private int nb;
 
     //region Constructor
+
+    public Boisson(String name, int price, int nb) {
+        this.name = name;
+        this.price = price;
+        this.nb = nb;
+    }
 
     public Boisson(String name, int price) {
         this.name = name;
         this.price = price;
+        this.nb = 0;
     }
 
     //endregion
@@ -23,7 +36,10 @@ public class Boisson {
         return price;
     }
 
-    //endregion
+    public int getNb() {
+        return nb;
+    }
+//endregion
 
     //region Setter
 
@@ -35,9 +51,17 @@ public class Boisson {
         this.price = price;
     }
 
+    public void setNb(int nb) {
+        this.nb = nb;
+    }
+
     //endregion
 
     //region Methode
+
+    public void addNb(int nbToAdd){
+        this.setNb(this.getNb() + nbToAdd);
+    }
 
     @Override
     public String toString() {
@@ -45,6 +69,22 @@ public class Boisson {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public void ecritureFichier(Boolean printConsole){
+        final String nom_dossier = "stock/Boissons/";
+        String nomFichier = this.getName() + ".ser";
+        String cheminFichier = nom_dossier + nomFichier;
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cheminFichier))) {
+            oos.writeObject(this);
+            if(printConsole)
+                System.out.println("L'ingrédient " + this.getName() + " est maintenant ajouté");
+
+
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire : " + e);
+        }
     }
 
     //endregion

@@ -69,7 +69,7 @@ public class Ingredients implements Serializable {
      * @param printConsole debug ou non
      */
     public void ecritureFichier(Boolean printConsole){
-        final String nom_dossier = "Produits/";
+        final String nom_dossier = "stock/Ingredients/";
         String nomFichier = this.getNom() + ".ser";
         String cheminFichier = nom_dossier + nomFichier;
 

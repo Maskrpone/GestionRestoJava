@@ -8,6 +8,9 @@ public class Main {
 
         Menu menu = new Menu();
         System.out.println(menu.getCartePlat().get(2));
+        System.out.println(menu.getCartePlat().get(5));
+        System.out.println(menu.getCartePlat().get(6));
+
 
         /*
         Ingredients i = new Ingredients("champignon", 1, 20);
@@ -28,6 +31,19 @@ public class Main {
         i7.ecritureFichier(true);
         Ingredients i8 = new Ingredients("tomate", 1, 20);
         i8.ecritureFichier(true);
+        */
+
+        /*
+        Boisson b = new Boisson("limonade", 4, 20);
+        Boisson b1 = new Boisson("cidre_doux", 5, 20);
+        Boisson b2 = new Boisson("biere_sans_alcool", 5, 20);
+        Boisson b3 = new Boisson("jus_de_fruit", 1, 20);
+        Boisson b4 = new Boisson("verre_eau", 0, 20);
+        b.ecritureFichier(true);
+        b1.ecritureFichier(true);
+        b2.ecritureFichier(true);
+        b3.ecritureFichier(true);
+        b4.ecritureFichier(true);
         */
 
         /*
@@ -76,18 +92,22 @@ public class Main {
         i8.ecritureFichier();
 
          */
-        /*
+
         ArrayList<HashMap<Produits, Integer>> produits;
         ArrayList<Produits> plat = new ArrayList<>();
+        ArrayList<Boisson> boisson = new ArrayList<>();
+
         plat.add(menu.getCartePlat().get(2));
-        Commande commande = new Commande(12, plat, plat);
+        plat.add(menu.getCartePlat().get(5));
+        plat.add(menu.getCartePlat().get(6));
+        Commande commande = new Commande(12, boisson, plat);
         Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
-        cuisinier.cuisinerCommande(commande);
+        //cuisinier.cuisinerCommande(commande);
 
 
-         */
+
         Manager m = new Manager("VDP", "Mathieu", 2, "manager");
-        m.consulterStock();
+        m.consulterStockBoisson();
 
     }
 }

@@ -30,7 +30,7 @@ public class Cuisinier extends Preparateur{
     //region Methode
     public void cuisinerCommande(Commande commande) {
         Stock stock = new Stock();
-        System.out.println("Cuisinier en train de préparer la commande pour la table " + commande.getTable());
+        System.out.println( this.getNom() + ", un de nos cuisinier, en train de préparer la commande pour la table " + commande.getTable());
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande
         for (Produits produit : commande.getRepas()) {
@@ -61,19 +61,6 @@ public class Cuisinier extends Preparateur{
             }
         }
         return -1;
-    }
-
-    /**
-     * Permet au thread d'attendre le temps de la preparation
-     * @param tempsAttente temps d'attente pour le plat
-     */
-    private void attendre(int tempsAttente) {
-        try {
-            // Simuler l'attente en millisecondes (vous pouvez ajuster cette logique en fonction de vos besoins)
-            Thread.sleep(tempsAttente * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

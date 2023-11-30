@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Stock {
     private ArrayList<Ingredients> stock;
+    private ArrayList<Boisson> stockBoisson;
 
     //region Constructor
     /**
@@ -19,8 +20,9 @@ public class Stock {
      */
     public Stock() {
         this.stock = new ArrayList<>();
+        this.stockBoisson = new ArrayList<>();
         // Nom du dossier
-        String dossier = "Produits";
+        String dossier = "stock/Ingredients";
         // tableau contenant tous les ingrédients
         String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
         // pour chaque ingrédient du tableau on va récupérer l'objet dans son fichier .ser et on l'insert dans le stock
@@ -29,6 +31,18 @@ public class Stock {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichier))) {
                 Ingredients ing = (Ingredients) ois.readObject();
                 this.stock.add(ing);
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Impossible de lire : " + e);
+            }
+        }
+
+        String dossierBoisson = "stock/Boissons";
+        String[] liste_boisson = new String[]{"limonade.ser", "cidre_doux.ser", "biere_sans_alcool.ser", "jus_de_fruit.ser", "verre_eau.ser"};
+        for (String s1 : liste_boisson) {
+            String cheminFichierBoisson = dossierBoisson + File.separator + s1;
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichierBoisson))) {
+                Boisson ing = (Boisson) ois.readObject();
+                this.stockBoisson.add(ing);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("Impossible de lire : " + e);
             }
@@ -69,6 +83,10 @@ public class Stock {
 
     public ArrayList<Ingredients> getStock() {
         return stock;
+    }
+
+    public ArrayList<Boisson> getStockBoisson() {
+        return stockBoisson;
     }
 
     //endregion
