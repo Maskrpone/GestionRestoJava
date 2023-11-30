@@ -12,11 +12,11 @@ public class Manager extends Employe {
 
     //region Constructor
     public Manager(String nom, String prenom, int salaire,String poste) {
-        super(nom, prenom, salaire);
+        super(nom, prenom, salaire, poste);
         this.employes = new HashMap<String, ArrayList<Employe>>();
     }
     public Manager(String nom, String prenom, int salaire,String poste , Stock _stock) {
-        super(nom, prenom, salaire);
+        super(nom, prenom, salaire, poste);
         this.employes = new HashMap<String, ArrayList<Employe>>();
         this.stock = _stock;
     }
@@ -58,7 +58,7 @@ public class Manager extends Employe {
         Map<Ingredients, Integer> ingredientsACommander = new HashMap<>();
         int priceToPay = 0;
 
-        for (Map.Entry<Ingredients, Integer> entry : stock.getStock().entrySet()) {
+        for (Ingredients ingredients : stock.getStock()) {
             Ingredients ingredient = entry.getKey();
             if (entry.getValue() <= 10) {
                 int quantiteAAcheter = 50 - entry.getValue();
