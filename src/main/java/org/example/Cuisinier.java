@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ public class Cuisinier extends Preparateur{
         System.out.println("Cuisinier en train de préparer la commande pour la table " + commande.getTable());
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande
+
+        /*
         for (HashMap<Produits, Integer> platCommande : commande.getProduits()) {
             for (Produits produit : platCommande.keySet()) {
                 int quantite = platCommande.get(produit);
@@ -48,7 +51,7 @@ public class Cuisinier extends Preparateur{
 
                 System.out.println("Plat " + produit.getNom() + " prêt pour la table " + commande.getTable() + " (Quantité: " + quantite + ")");
             }
-        }
+        }*/
 
         System.out.println("Commande pour la table " + commande.getTable() + " est prête !");
     }
