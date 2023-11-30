@@ -1,15 +1,16 @@
 package org.example;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Commande {
+public class Commande implements Serializable {
     private final int table;
     private final ArrayList<Produits> repas;
-    private final ArrayList<Produits> boissons;
+    private final ArrayList<Boisson> boissons;
     private boolean enPreparation;
 
 
     //region Constructor
-    public Commande(int table, ArrayList<Produits> boissons, ArrayList<Produits> repas) {
+    public Commande(int table, ArrayList<Boisson> boissons, ArrayList<Produits> repas) {
         this.table = table;
         this.boissons = boissons;
         this.repas = repas;
@@ -26,7 +27,7 @@ public class Commande {
         return repas;
     }
 
-    public ArrayList<Produits> getBoissons() {
+    public ArrayList<Boisson> getBoissons() {
         return boissons;
     }
     //endregion

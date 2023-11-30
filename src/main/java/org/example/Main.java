@@ -9,6 +9,27 @@ public class Main {
         Menu menu = new Menu();
         System.out.println(menu.getCartePlat().get(2));
 
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("pain", 1);
+        ingredients.put("tomate", 1);
+        ingredients.put("salade", 1);
+        ingredients.put("steak", 1);
+        Produits burger = new Produits("Hamburger", 10, ingredients, 1);
+
+        ArrayList<String> ingredients2 = new ArrayList<>();
+        ingredients2.add("limonade");
+        Boisson limonade = new Boisson("Limonade", 5);
+
+        ArrayList<Produits> repas = new ArrayList<>();
+        repas.add(burger);
+        ArrayList<Boisson> boissons = new ArrayList<>();
+        boissons.add(limonade);
+
+        serveur.addCommande(15,boissons, repas);
+
+        //TODO: gérer l'exception lorsque les fichier .ser n'existent pas
+        //TODO: faire en sorte d'avoir un stock par défaut (fonction qui init le stock pour le manager par ex)
+
         /*
         Ingredients i = new Ingredients("champignon", 1, 20);
         Ingredients i1 = new Ingredients("fromage", 2, 20);
