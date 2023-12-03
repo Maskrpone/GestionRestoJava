@@ -5,11 +5,21 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
         Menu menu = new Menu();
+        /*
         System.out.println(menu.getCartePlat().get(2));
         System.out.println(menu.getCartePlat().get(5));
         System.out.println(menu.getCartePlat().get(6));
+         */
+
+
+        Serveur serveur = new Serveur("Bob", "Leponge", 2, "Serveur");
+        ArrayList<Produits> plat = new ArrayList<>();
+        ArrayList<Boisson> boisson = new ArrayList<>();
+        plat.add(menu.getCartePlat().get(2));
+        boisson.add(menu.getCarteBoisson().get(1));
+
+        serveur.addCommande(15, boisson, plat);
 
 
         /*
@@ -31,9 +41,10 @@ public class Main {
         i7.ecritureFichier(true);
         Ingredients i8 = new Ingredients("tomate", 1, 20);
         i8.ecritureFichier(true);
-        */
+        Ingredients pate = new Ingredients("pate", 1, 20);
+        pate.ecritureFichier(true);
 
-        /*
+
         Boisson b = new Boisson("limonade", 4, 20);
         Boisson b1 = new Boisson("cidre", 5, 20);
         Boisson b2 = new Boisson("biere", 5, 20);
@@ -43,9 +54,7 @@ public class Main {
         b1.ecritureFichier(true);
         b2.ecritureFichier(true);
         b3.ecritureFichier(true);
-        b4.ecritureFichier(true);
-
-         */
+        b4.ecritureFichier(true);*/
 
         /*
         HashMap<String, Integer> ingredients = new HashMap<>();
@@ -68,10 +77,7 @@ public class Main {
         //serveur.addCommande(15,boissons, repas);
 
          */
-
-        //TODO: gérer l'exception lorsque les fichier .ser n'existent pas
-        //TODO: faire en sorte d'avoir un stock par défaut (fonction qui init le stock pour le manager par ex)
-
+        /*
         ArrayList<HashMap<Produits, Integer>> produits;
         ArrayList<Produits> plat = new ArrayList<>();
         ArrayList<Boisson> boisson = new ArrayList<>();
@@ -87,10 +93,10 @@ public class Main {
         System.out.println(menu.getCarteBoisson().get(3));
         Commande commande = new Commande(12, boisson, plat);
         Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
-        Barman barman = new Barman("Bob", "Leponge", 2, "Cuisinier");
+        Barman barman = new Barman("Bob", "Leponge", 2, "Cuisinier"); */
         //cuisinier.cuisinerCommande(commande);
         //barman.preparerBoisson(commande);
-        menu.afficherMenu();
+        //menu.afficherMenu();
 
     }
 }

@@ -11,6 +11,7 @@ public class Serveur extends Employe{
     //region Constructor
     public Serveur(String nom, String prenom, int salaire, String poste) {
         super(nom, prenom, salaire, poste);
+        System.out.println("Le serveur " + nom + " " + prenom + " est créé.");
     }
 
     //endregion
@@ -23,9 +24,11 @@ public class Serveur extends Employe{
      * @param repas tableau des repas
      */
     public void addCommande(int table, ArrayList<Boisson> boissons, ArrayList<Produits> repas) {
+        Stock stock = new Stock();
+        stock.displayStock();
         int produit_impossible = 0;
         for (Boisson it : boissons) {
-            if(inStock(it)) {
+            if(inStock(it,stock)) {
                 System.out.println("Nous pouvons produire " + it.getName());
             } else {
                 System.err.println("Nous ne pouvons pas produire " + it.getName());
@@ -33,7 +36,7 @@ public class Serveur extends Employe{
             }
         }
         for (Produits it : repas) {
-            if (inStock(it)) {
+            if (inStock(it,stock)) {
                 System.out.println("Nous pouvons produire " + it.getNom());
             } else {
                 System.err.println("Nous ne pouvons pas produire " + it.getNom());
@@ -45,6 +48,8 @@ public class Serveur extends Employe{
             // envoi de la commande en cuisine et au bar
             this.envoi(commande);
             System.out.println("Commande envoyée à la cuisine et au bar.");
+        } else {
+            System.err.println("La commande ne peut pas être envoyée.");
         }
     }
 
@@ -54,10 +59,10 @@ public class Serveur extends Employe{
      * @param prod qui est le produit dont on veut controler la disponibilité des ingrédients
      * @return Boolean
      */
-    public boolean inStock(Produits prod) {
-        Stock stock = new Stock();
+    public boolean inStock(Produits prod, Stock stock) {
         for (String key : prod.getIngredients().keySet()) {
             if (stock.getIngredient(key) < prod.getIngredients().get(key)) {
+                System.out.println("Instock : " + stock.getIngredient(key) + " " + key + " " + prod.getIngredients().get(key));
                 return false;
             }
         }
@@ -70,10 +75,15 @@ public class Serveur extends Employe{
      * @param boisson   la boisson dont on veut vérifier la disponibilité
      * @return  boolean
      */
-
-    public boolean inStock(Boisson boisson) {
-        Stock stock = new Stock();
-        return stock.getIngredient(boisson.getName()) != 0;
+    public boolean inStock(Boisson boisson, Stock stock) {
+        for (Boisson it : stock.getStockBoisson()) {
+            if (it.getName().equals(boisson.getName())) {
+                if (it.getNb() == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -104,7 +114,7 @@ public class Serveur extends Employe{
      * @param commande la commande à sérialiser
      */
     public void envoi(Commande commande) {
-        final String nom_dossier = "/commandes/";
+        final String nom_dossier = "commandes/";
         String prefixe = "COMM_";
         int numeroCommande = obtenirCommandeSuivante(nom_dossier,prefixe);
         String nomFichier = prefixe + numeroCommande + ".ser";

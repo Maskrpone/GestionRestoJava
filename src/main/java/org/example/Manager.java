@@ -32,6 +32,13 @@ public class Manager extends Employe {
         this.employes = employes;
     }
 
+    /**
+     * Permet de sélectionner une équipe
+     * @return le hashmap d'une équipe qu'on chargera dans l'attribut employé du resto
+     */
+    public HashMap<String, Employe> selectTeam() {
+        return null;
+    }
     public void setStock(Stock stock) {
 
     }

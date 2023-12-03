@@ -6,7 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.File;
 
 import java.util.ArrayList;
-
 public class Stock {
     private ArrayList<Ingredients> stock;
     private ArrayList<Boisson> stockBoisson;
@@ -22,13 +21,14 @@ public class Stock {
         this.stock = new ArrayList<>();
         this.stockBoisson = new ArrayList<>();
         // tableau contenant tous les ingrédients
-        String dossier = "stock/";
-        String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
+        String dossier = "stock/Ingredients/";
+        String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser", "pate.ser"};
         // pour chaque ingrédient du tableau on va récupérer l'objet dans son fichier .ser et on l'insert dans le stock
         for (String s : liste_ingredient) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dossier + s))) {
                 Ingredients ing = (Ingredients) ois.readObject();
                 this.stock.add(ing);
+                System.out.println("Ingrédients récupérés: " + ing.getNom());
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Impossible de lire : " + e);
             }
@@ -40,6 +40,7 @@ public class Stock {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichierBoisson))) {
                 Boisson ing = (Boisson) ois.readObject();
                 this.stockBoisson.add(ing);
+                System.out.println("Boisson récupérée: " + ing.getName());
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("Impossible de lire : " + e);
             }
@@ -133,6 +134,15 @@ public class Stock {
             }
         }
     }
-
     //endregion
+
+    public void displayStock() {
+        System.out.println("--------------------------------------------------");
+        System.out.println("|\t\t   Nom de l'ingrédient   \t\t|\t\t        Quantité        \t\t|");
+        System.out.println("--------------------------------------------------");
+        for (Ingredients ingredient : stock) {
+            System.out.printf("|\t %-15s \t\t\t|\t %-18s \t\t\t|\n", ingredient.getNom(), ingredient.getNb());
+        }
+        System.out.println("--------------------------------------------------");
+    }
 }
