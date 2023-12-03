@@ -1,9 +1,9 @@
 package org.example;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.File;
 
 import java.util.ArrayList;
 
@@ -21,21 +21,18 @@ public class Stock {
     public Stock() {
         this.stock = new ArrayList<>();
         this.stockBoisson = new ArrayList<>();
-        // Nom du dossier
-        String dossier = "stock/Ingredients";
         // tableau contenant tous les ingrédients
+        String dossier = "stock/";
         String[] liste_ingredient = new String[] {"salade.ser", "tomate.ser", "oignon.ser", "champignon.ser", "pain.ser", "steak.ser", "patate.ser", "fromage.ser", "saucisse.ser"};
         // pour chaque ingrédient du tableau on va récupérer l'objet dans son fichier .ser et on l'insert dans le stock
         for (String s : liste_ingredient) {
-            String cheminFichier = dossier + File.separator + s;
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichier))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dossier + s))) {
                 Ingredients ing = (Ingredients) ois.readObject();
                 this.stock.add(ing);
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Impossible de lire : " + e);
+                System.err.println("Impossible de lire : " + e);
             }
         }
-
         String dossierBoisson = "stock/Boissons";
         String[] liste_boisson = new String[]{"limonade.ser", "cidre.ser", "biere.ser", "jus.ser", "eau.ser"};
         for (String s1 : liste_boisson) {
@@ -48,6 +45,16 @@ public class Stock {
             }
         }
     }
+
+    /**
+     * Constructeur de la classe stock, s'initialisant avec une liste d'ingrédients passée en paramètre
+     * @author  Hippolyte
+     * @param _stock la liste d'ingrédients
+     */
+    public Stock(ArrayList<Ingredients> _stock) {
+        this.stock = _stock;
+    }
+
     //endregion
 
     //region Getter
@@ -84,11 +91,9 @@ public class Stock {
     public ArrayList<Ingredients> getStock() {
         return stock;
     }
-
     public ArrayList<Boisson> getStockBoisson() {
         return stockBoisson;
     }
-
     //endregion
 
     //region Setter
@@ -102,7 +107,6 @@ public class Stock {
         for (Ingredients it : this.stock) {
             if (it.getNom().equals(ingredient)) {
                 it.setNb(it.getNb() - quantity);
-                it.ecritureFichier(false);
             }
         }
     }

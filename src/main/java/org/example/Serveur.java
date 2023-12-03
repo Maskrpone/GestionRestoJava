@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class
-Serveur extends Employe{
+public class Serveur extends Employe{
 
     //region Constructor
     public Serveur(String nom, String prenom, int salaire, String poste) {
@@ -115,7 +114,7 @@ Serveur extends Employe{
             oos.writeObject(commande);
             System.out.println("La commande de la table" + commande.getTable() + " est envoyée en cuisine !");
         } catch (IOException e) {
-            System.out.println("Impossible d'écrire : " + e);
+            System.err.println("Impossible d'écrire : " + e);
         }
     }
 
