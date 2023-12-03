@@ -35,10 +35,10 @@ public class Main {
 
         /*
         Boisson b = new Boisson("limonade", 4, 20);
-        Boisson b1 = new Boisson("cidre_doux", 5, 20);
-        Boisson b2 = new Boisson("biere_sans_alcool", 5, 20);
-        Boisson b3 = new Boisson("jus_de_fruit", 1, 20);
-        Boisson b4 = new Boisson("verre_eau", 0, 20);
+        Boisson b1 = new Boisson("cidre", 5, 20);
+        Boisson b2 = new Boisson("biere", 5, 20);
+        Boisson b3 = new Boisson("jus", 1, 20);
+        Boisson b4 = new Boisson("eau", 0, 20);
         b.ecritureFichier(true);
         b1.ecritureFichier(true);
         b2.ecritureFichier(true);

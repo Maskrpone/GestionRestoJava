@@ -37,7 +37,7 @@ public class Stock {
         }
 
         String dossierBoisson = "stock/Boissons";
-        String[] liste_boisson = new String[]{"limonade.ser", "cidre_doux.ser", "biere_sans_alcool.ser", "jus_de_fruit.ser", "verre_eau.ser"};
+        String[] liste_boisson = new String[]{"limonade.ser", "cidre.ser", "biere.ser", "jus.ser", "eau.ser"};
         for (String s1 : liste_boisson) {
             String cheminFichierBoisson = dossierBoisson + File.separator + s1;
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichierBoisson))) {
@@ -108,12 +108,12 @@ public class Stock {
     }
 
     public void useStockBoisson(Boisson boisson) {
-        for (Boisson it : this.getStockBoisson()){
+        for (Boisson it : this.stockBoisson){
             if(it.getName().equals(boisson.getName())){
                 System.out.println(it.getNb());
                 it.setNb(it.getNb() - 1);
                 System.out.println(it.getNb());
-                it.ecritureFichier(true);
+                it.ecritureFichier(false);
             }
         }
     }
