@@ -89,12 +89,8 @@ public class Main {
         Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
         Barman barman = new Barman("Bob", "Leponge", 2, "Cuisinier");
         //cuisinier.cuisinerCommande(commande);
-        barman.preparerBoisson(commande);
-
-
-
-        Manager m = new Manager("VDP", "Aert", 2, "manager");
-        m.consulterStockBoisson();
+        //barman.preparerBoisson(commande);
+        menu.afficherMenu();
 
     }
 }
