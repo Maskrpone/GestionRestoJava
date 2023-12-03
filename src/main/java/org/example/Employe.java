@@ -1,9 +1,11 @@
 package org.example;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 
-public class Employe {
+public class Employe implements Serializable {
     private final String nom;
     private final String prenom;
     private final int salaire;
@@ -36,6 +38,13 @@ public class Employe {
 
     public int getSalaire() {
         return salaire;
+    }
+
+    public void ecrireEmploye() {
+
+    }
+    public ArrayList<Employe> formerEquipe() {
+        return null;
     }
 
 }

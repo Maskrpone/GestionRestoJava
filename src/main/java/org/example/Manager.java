@@ -49,7 +49,7 @@ public class Manager extends Employe {
 
     //endregion
 
-    //region Methode
+    //region MethodesStock
     public void finJournee() {}
 
     /**
@@ -131,7 +131,6 @@ public class Manager extends Employe {
         return quantitiesAdded;
     }
 
-
     /**
      * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une map
      * @author Thibaut
@@ -152,4 +151,20 @@ public class Manager extends Employe {
     }
 
     //endregion
+
+    //region MethodesEmployes
+    public void embaucher() {
+        System.out.println("Créez le profil de l'employé :");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nom : ");
+        String nom = scanner.nextLine();
+        System.out.print("Prénom : ");
+        String prenom = scanner.nextLine();
+        System.out.print("Salaire : ");
+        int salaire = scanner.nextInt();
+        System.out.print("Poste : ");
+        String poste = scanner.nextLine();
+        Employe employe = new Employe(nom, prenom, salaire, poste);
+    }
+
 }
