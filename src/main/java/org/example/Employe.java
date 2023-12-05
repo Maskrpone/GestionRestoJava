@@ -70,5 +70,9 @@ public class Employe implements Serializable {
         System.out.println("Jours travaillés: " + this.jours_travailles);
         System.out.println("Poste: " + this.poste);
     }
+
+    public void afficherConcis() {
+        System.out.println(this.nom + " " + this.prenom + " (" + this.poste + ")");
+    }
     //endregion
 }

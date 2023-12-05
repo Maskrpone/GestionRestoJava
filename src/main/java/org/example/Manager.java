@@ -259,7 +259,7 @@ public class Manager extends Employe {
             if (!employes.isEmpty()) {
                 System.out.println("Employés disponibles :");
                 for (Employe employe : employes) {
-                    employe.afficher();
+                    employe.afficherConcis();
                 }
             } else {
                 System.out.println("Aucun employé disponible.");
@@ -270,6 +270,6 @@ public class Manager extends Employe {
     }
 
     public ArrayList<Employe> formerEquipe() {
-        return null;
+
     }
 }
