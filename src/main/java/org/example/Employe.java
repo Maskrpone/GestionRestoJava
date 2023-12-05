@@ -1,16 +1,14 @@
 package org.example;
-
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class Employe implements Serializable {
     private final String nom;
     private final String prenom;
     private final int salaire;
     private int jours_travailles;
-    private String poste;
+    private final String poste;
 
     public void setJours_travailles(int jours_travailles) {
         this.jours_travailles = jours_travailles;
@@ -28,6 +26,7 @@ public class Employe implements Serializable {
         this.poste = poste;
     }
 
+    //region Getter
     public String getNom() {
         return nom;
     }
@@ -39,12 +38,37 @@ public class Employe implements Serializable {
     public int getSalaire() {
         return salaire;
     }
+    //endregion
 
+    //region Methodes
+
+    /**
+     * Fonction qui sauvegarde le profil employé dans un fichier dans le répertoire "employes/"
+     * @author Hippolyte
+     */
     public void ecrireEmploye() {
+        final String nom_dossier = "employes/";
+        final String nom_fichier = this.nom + "_" + this.prenom + ".ser";
+        final String chemin_fichier = nom_dossier + nom_fichier;
 
-    }
-    public ArrayList<Employe> formerEquipe() {
-        return null;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(chemin_fichier))) {
+            oos.writeObject(this);
+            System.out.println("Employe écrit: " + this.nom + " " + this.prenom);
+        } catch (Exception e) {
+            System.err.println("Impossible d'écrire : " + e);
+        }
     }
 
+    /**
+     * Fonction qui affiche les informations de l'employé dans la console
+     * @author Hippolyte
+     */
+    public void afficher() {
+        System.out.println("Nom: " + this.nom);
+        System.out.println("Prenom: " + this.prenom);
+        System.out.println("Salaire: " + this.salaire);
+        System.out.println("Jours travaillés: " + this.jours_travailles);
+        System.out.println("Poste: " + this.poste);
+    }
+    //endregion
 }

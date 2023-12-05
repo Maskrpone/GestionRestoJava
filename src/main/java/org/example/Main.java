@@ -1,11 +1,11 @@
 package org.example;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) {
+        Manager manager = new Manager("Lemichel", "Thibaut", 2000, "Manager");
+        manager.displayEmployesDisponibles();
+        manager.licencier();
+        manager.displayEmployesDisponibles();
     }
 }
 

@@ -10,7 +10,8 @@ public class Restaurant {
     //region Constructor
     public Restaurant() {
         Manager manager = new Manager("Lemichel", "Thibaut", 2000, "Manager");
-        this.employes = manager.formerEquipe();
+        //this.employes = manager.formerEquipe();
+        this.employes = new ArrayList<>();
     }
     //endregion
 
