@@ -1,11 +1,10 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Restaurant {
     private Manager manager;
-    private ArrayList<Employe> employes;
+    private final ArrayList<Employe> employes;
 
     //region Constructor
     public Restaurant() {
