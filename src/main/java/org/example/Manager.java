@@ -7,10 +7,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * @class  Manager est une classe fille de Employe
- * @see Employe est une classe mère des différents employés du restaurant, occupant des postes différents
  * @author Hippolyte & Thibaut
- *
+ * @class Manager est une classe fille de Employe
  * @method embaucher() permet d'embaucher un employé
  * @method licencier() permet de licencier un employé
  * @method displayEmployesDisponibles() permet d'afficher les employés disponibles
@@ -20,14 +18,14 @@ import java.util.Scanner;
  * @method finJournee() permet de finir la journée
  * @method selectTeam() permet de sélectionner une équipe
  * @method setStock() permet de modifier le stock
- *
+ * @see Employe est une classe mère des différents employés du restaurant, occupant des postes différents
  */
 public class Manager extends Employe {
     private HashMap<String, ArrayList<Employe>> employes;
     private ArrayList<Commande> historique_commandes;
 
     //region Constructor
-    public Manager(String nom, String prenom, int salaire,String poste) {
+    public Manager(String nom, String prenom, int salaire, String poste) {
         super(nom, prenom, salaire, poste);
         this.employes = new HashMap<>();
     }
@@ -51,11 +49,13 @@ public class Manager extends Employe {
 
     /**
      * Permet de sélectionner une équipe
+     *
      * @return le hashmap d'une équipe qu'on chargera dans l'attribut employé du resto
      */
     public HashMap<String, Employe> selectTeam() {
         return null;
     }
+
     public void setStock(Stock stock) {
 
     }
@@ -67,14 +67,15 @@ public class Manager extends Employe {
     //endregion
 
     //region MethodesStock
-    public void finJournee() {}
+    public void finJournee() {
+    }
 
     /**
-     * @author Thibaut
-     * @param stockLow Valeur minimale dans stock
+     * @param stockLow  Valeur minimale dans stock
      * @param stockFull Valeur de stock full
-     * @param stock Le stock à controler
+     * @param stock     Le stock à controler
      * @return Le prix total à payer
+     * @author Thibaut
      */
     public int ingredientsACommanderRapide(int stockLow, int stockFull, Stock stock) {
         Map<Ingredients, Integer> ingredientsACommander = new HashMap<>();
@@ -93,9 +94,9 @@ public class Manager extends Employe {
     }
 
     /**
-     * @author Thibaut
      * @param stock Le stock à consulter
      * @return La map d'ingrédient commandé avec la quantité
+     * @author Thibaut
      */
     public Map<Ingredients, Integer> consulterStock(Stock stock) {
         ArrayList<Ingredients> currentStock = stock.getStock();
@@ -150,18 +151,19 @@ public class Manager extends Employe {
 
     /**
      * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une map
-     * @author Thibaut
+     *
      * @param stock Le stock à consulter
      * @return Le prix de l'augmentation stock
+     * @author Thibaut
      */
-    public int consulterStockPriceToPay(Stock stock){
+    public int consulterStockPriceToPay(Stock stock) {
         Map<Ingredients, Integer> ingredientAchetes;
         ingredientAchetes = consulterStock(stock);
         int priceToPay = 0;
 
-        for(Map.Entry<Ingredients, Integer> entry : ingredientAchetes.entrySet()){
+        for (Map.Entry<Ingredients, Integer> entry : ingredientAchetes.entrySet()) {
             Ingredients ingredient = entry.getKey();
-            priceToPay += ingredient.getPrice()*entry.getValue();
+            priceToPay += ingredient.getPrice() * entry.getValue();
         }
 
         return priceToPay;
@@ -173,7 +175,8 @@ public class Manager extends Employe {
 
     /**
      * Permet de créer un employé et de l'ajouter à la liste des employés disponibles
-     * @author  Hippolyte
+     *
+     * @author Hippolyte
      */
     public void embaucher() {
         System.out.println("Créez le profil de l'employé :");
@@ -198,6 +201,7 @@ public class Manager extends Employe {
 
     /**
      * Permet de licencier un employé et de supprimer son profil du répertoire "employes/" s'il existe
+     *
      * @author Hippolyte
      */
     public void licencier() {
@@ -227,19 +231,17 @@ public class Manager extends Employe {
 
     }
 
-    /**
-     * Permet d'afficher les différents employés disponibles
-     * @author  Hippolyte
-     */
-    public void displayEmployesDisponibles() {
+    public ArrayList<Employe> getEmployesDisponibles() {
+
         // on récupère les fichiers contenant les différents employés
         // (un fichier par employé)
         final String dossier = "employes/";
         File dossierEmploye = new File(dossier);
 
+        ArrayList<Employe> employes = new ArrayList<>();
+
         // on vérifie que le dossier existe et qu'il s'agit bien d'un dossier
         if (dossierEmploye.exists() && dossierEmploye.isDirectory()) {
-            ArrayList<Employe> employes = new ArrayList<>();
 
             // on récupère les fichiers contenus dans le dossier
             File[] fichiersEmployes = dossierEmploye.listFiles();
@@ -255,21 +257,201 @@ public class Manager extends Employe {
                     }
                 }
             }
-            // affichage de chaque employé disponible
-            if (!employes.isEmpty()) {
-                System.out.println("Employés disponibles :");
-                for (Employe employe : employes) {
-                    employe.afficherConcis();
-                }
-            } else {
-                System.out.println("Aucun employé disponible.");
+        } else {
+            System.err.println("Impossible de lire le dossier : " + dossier);
+        }
+        return employes;
+    }
+
+    /**
+     * Permet d'afficher les différents employés disponibles
+     *
+     * @author Hippolyte
+     */
+    public void displayEmployesDisponibles() {
+        ArrayList<Employe> employes = getEmployesDisponibles();
+        // affichage de chaque employé disponible
+        if (!employes.isEmpty()) {
+            System.out.println("Employés disponibles :");
+            for (Employe employe : employes) {
+                employe.afficherConcis();
             }
         } else {
-            System.err.println("Impossible d'accéder au dossier : " + dossier);
+            System.out.println("Aucun employé disponible.");
         }
     }
 
-    public ArrayList<Employe> formerEquipe() {
+    public Employe selectEmploye(String nom, String prenom, String poste, ArrayList<Employe> employesDispos)
+            throws ErrorHandler {
+        for (Employe employe : employesDispos) {
+            if (employe.getNom().equals(nom) && employe.getPrenom().equals(prenom)
+                    && employe.getPoste().equals(poste)) {
+                return employe;
+            }
+        }
+        throw new ErrorHandler("Employé non trouvé : " + nom + " " + prenom + " -> " + poste);
+    }
 
+    /**
+     * Fonction qui nous retourne une équipe remplissant les conditions d'ouverture du restaurant
+     *
+     * @return ArrayList<Employe> équipe complète
+     */
+    public ArrayList<Employe> formerEquipe() throws ErrorHandler {
+        // L'équipe qu'on va retourner
+        ArrayList<Employe> equipe = new ArrayList<>();
+        // On récupère les employés disponibles
+        ArrayList<Employe> employesDispos = getEmployesDisponibles();
+
+        // on crée trois tableaux différents afin de pouvoir s'y retrouver
+        ArrayList<Employe> cuisiniers = new ArrayList<>();
+        ArrayList<Employe> serveurs = new ArrayList<>();
+        ArrayList<Employe> barmans = new ArrayList<>();
+
+        System.out.println("Il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
+        System.out.println("Choisissez vos cuisiniers (au moins 4) :");
+
+        String operation;
+
+        // interface pour constituer l'équipe de cuisinier
+        do {
+            // affichage interface CLI
+            System.out.println("Vous avez actuellement sélectionné " + cuisiniers.size() + " cuisiniers.");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("1. Afficher tous les employés");
+            System.out.println("2. Sélectionner");
+            System.out.print("(0 pour quitter) > ");
+            operation = scanner.nextLine();
+
+            // on traite les inputs
+            switch (operation) {
+                case "1":
+                    displayEmployesDisponibles();
+                    break;
+                case "2":
+                    System.out.print("Nom : ");
+                    String nom = scanner.nextLine();
+                    System.out.print("Prénom : ");
+                    String prenom = scanner.nextLine();
+                    try {
+                        // on va récupérer l'employé en question
+                        // on vérifie qu'il s'agit bien d'un cuisinier et qu'il existe
+                        Employe nouveau = selectEmploye(nom, prenom, "cuisinier", employesDispos);
+
+                        // On vérifie qu'il n'est pas déjà sélectionné
+                        for (Employe cuisinier : cuisiniers) {
+                            if (cuisinier.getNom().equals(nouveau.getNom()) &&
+                                    cuisinier.getPrenom().equals(nouveau.getPrenom())) {
+                                throw new ErrorHandler("Cuisinier déjà sélectionné.");
+                            }
+                        }
+                        cuisiniers.add(nouveau);
+                    } catch (ErrorHandler e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                default:
+                    System.err.println("Opération non supportée.");
+                    break;
+            }
+        } while (!operation.equals("0") && cuisiniers.size() < 4);
+
+        System.out.println("Choisissez vos serveurs (au moins 2) :");
+
+        // interface pour constituer l'équipe de serveurs
+        do {
+            // affichage de l'interface CLI
+            System.out.println("Vous avez actuellement sélectionné " + serveurs.size() + " serveurs.");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("1. Afficher tous les employés");
+            System.out.println("2. Sélectionner");
+            System.out.print("(0 pour quitter) > ");
+            operation = scanner.nextLine();
+
+            // on traite les inputs
+            switch (operation) {
+                case "1":
+                    displayEmployesDisponibles();
+                    break;
+                case "2":
+                    System.out.print("Nom : ");
+                    String nom = scanner.nextLine();
+                    System.out.print("Prénom : ");
+                    String prenom = scanner.nextLine();
+                    try {
+                        // on va récupérer l'employé en question
+                        // on vérifie qu'il s'agit bien d'un serveur et qu'il existe
+                        Employe nouveau = selectEmploye(nom, prenom, "serveur", employesDispos);
+
+                        // On vérifie qu'il n'est pas déjà sélectionné
+                        for (Employe serveur : serveurs) {
+                            if (serveur.getNom().equals(nouveau.getNom()) && serveur.getPrenom().equals(nouveau.getPrenom())) {
+                                throw new ErrorHandler("Serveur déjà sélectionné.");
+                            }
+                        }
+                        serveurs.add(nouveau);
+                    } catch (ErrorHandler e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                default:
+                    System.err.println("Opération non supportée.");
+                    break;
+
+            }
+        } while (!operation.equals("0") && serveurs.size() < 2);
+
+        System.out.println("Choisissez votre barman (1) :");
+
+        // interface pour constituer l'équipe de barman
+        do {
+            // affichage de l'interface CLI
+            System.out.println("Vous avez actuellement sélectionné " + barmans.size() + " barman.");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("1. Afficher tous les employés");
+            System.out.println("2. Sélectionner");
+            System.out.print("(0 pour quitter) > ");
+            operation = scanner.nextLine();
+
+            // on traite les inputs
+            switch (operation) {
+                case "1":
+                    displayEmployesDisponibles();
+                    break;
+                case "2":
+                    System.out.print("Nom : ");
+                    String nom = scanner.nextLine();
+                    System.out.print("Prénom : ");
+                    String prenom = scanner.nextLine();
+                    try {
+                        // on va récupérer l'employé en question
+                        // on vérifie qu'il s'agit bien d'un barman et qu'il existe
+                        Employe nouveau = selectEmploye(nom, prenom, "barman", employesDispos);
+                        for (Employe barman : barmans) {
+                            if (barman.getNom().equals(nouveau.getNom()) &&
+                                    barman.getPrenom().equals(nouveau.getPrenom())) {
+                                throw new ErrorHandler("Barman déjà sélectionné.");
+                            }
+                        }
+                        barmans.add(nouveau);
+                    } catch (ErrorHandler e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                default:
+                    System.err.println("Opération non supportée.");
+                    break;
+            }
+        } while (!operation.equals("0") && barmans.isEmpty());
+
+        // On vérifie ce que si l'équipe est bien complète, on throw une erreur sinon
+        if (barmans.isEmpty() || cuisiniers.size() < 4 || serveurs.size() < 2) {
+            throw new ErrorHandler("L'équipe n'est pas complète.");
+        }
+        // on assemble l'équipe
+        equipe.addAll(cuisiniers);
+        equipe.addAll(serveurs);
+        equipe.addAll(barmans);
+        return equipe;
     }
 }

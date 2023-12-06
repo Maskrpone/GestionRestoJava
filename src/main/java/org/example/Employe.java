@@ -38,6 +38,11 @@ public class Employe implements Serializable {
     public int getSalaire() {
         return salaire;
     }
+
+    public String getPoste() {
+        return poste;
+    }
+
     //endregion
 
     //region Methodes
