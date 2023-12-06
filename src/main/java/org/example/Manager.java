@@ -385,7 +385,8 @@ public class Manager extends Employe {
 
                         // On vérifie qu'il n'est pas déjà sélectionné
                         for (Employe serveur : serveurs) {
-                            if (serveur.getNom().equals(nouveau.getNom()) && serveur.getPrenom().equals(nouveau.getPrenom())) {
+                            if (serveur.getNom().equals(nouveau.getNom()) &&
+                                    serveur.getPrenom().equals(nouveau.getPrenom())) {
                                 throw new ErrorHandler("Serveur déjà sélectionné.");
                             }
                         }
