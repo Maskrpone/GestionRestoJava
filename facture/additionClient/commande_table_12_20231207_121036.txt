@@ -1,0 +1,11 @@
+Commande table n° 12 - 2023-12-07 12:10:36
+
+Boisson:
+	jus - 1
+	biere - 5
+	biere - 5
+
+Plat:
+	pizza-pepperoni - 12
+
+Total: 23

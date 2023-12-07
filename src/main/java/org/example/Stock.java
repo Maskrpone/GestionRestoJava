@@ -28,7 +28,7 @@ public class Stock {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dossier + s))) {
                 Ingredients ing = (Ingredients) ois.readObject();
                 this.stock.add(ing);
-                System.out.println("Ingrédients récupérés: " + ing.getNom());
+                // System.out.println("Ingrédients récupérés: " + ing.getNom());
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Impossible de lire : " + e);
             }
@@ -40,7 +40,7 @@ public class Stock {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cheminFichierBoisson))) {
                 Boisson ing = (Boisson) ois.readObject();
                 this.stockBoisson.add(ing);
-                System.out.println("Boisson récupérée: " + ing.getName());
+                // System.out.println("Boisson récupérée: " + ing.getName());
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("Impossible de lire : " + e);
             }

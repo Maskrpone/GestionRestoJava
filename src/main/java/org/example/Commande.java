@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -142,6 +143,11 @@ public class Commande implements Serializable {
                 }
 
                 Commande.this.setEnPreparation(false);
+
+                FileText f = new FileText();
+
+                f.writeCommandeToFile(Commande.this);
+
                 afficherFacture();
 
             }
@@ -258,6 +264,11 @@ public class Commande implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 // Réagir au clic sur le bouton de validation
                 System.out.println("Vous avez imprimé la facture");
+
+                // ouvrir le dernier fichier de facture
+                FileText f = new FileText();
+                f.openLastFile();
+
             }
         });
         panel.add(buttonPrint);
@@ -280,7 +291,7 @@ public class Commande implements Serializable {
 
     }
 
-    private String getPrixTotal() {
+    String getPrixTotal() {
         int prixTotal = 0;
         for (Boisson boisson : boissons) {
             prixTotal += boisson.getPrice();
@@ -317,7 +328,6 @@ public class Commande implements Serializable {
             }
         });
         panel.add(buttonFermer);
-        
 
         // Ajouter le panneau à la fenêtre
         frame.add(panel);

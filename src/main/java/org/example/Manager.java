@@ -101,51 +101,52 @@ public class Manager extends Employe {
     public Map<Ingredients, Integer> consulterStock(Stock stock) {
         ArrayList<Ingredients> currentStock = stock.getStock();
         Map<Ingredients, Integer> quantitiesAdded = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            int index = 1;
-            System.out.println("Stock actuel :");
-
-            for (Ingredients ingredient : currentStock) {
-                int quantite = ingredient.getNb();
-                System.out.println(index + ". " + ingredient.getNom() + ": " + quantite);
-                index++;
-            }
-
-            System.out.print("Sélectionnez le numéro de l'ingrédient à augmenter (0 pour quitter) : ");
-            int selectedNumber = scanner.nextInt();
-
-
-            if (selectedNumber == 0) {
-                break; // Quitte la boucle si 0 est sélectionné
-            } else if (selectedNumber > 0 && selectedNumber <= currentStock.size()) {
-                Ingredients selectedIngredient = null;
-                int currentIndex = 1;
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                int index = 1;
+                System.out.println("Stock actuel :");
 
                 for (Ingredients ingredient : currentStock) {
-                    if (currentIndex == selectedNumber) {
-                        selectedIngredient = ingredient;
-                        break;
+                    int quantite = ingredient.getNb();
+                    System.out.println(index + ". " + ingredient.getNom() + ": " + quantite);
+                    index++;
+                }
+
+                System.out.print("Sélectionnez le numéro de l'ingrédient à augmenter (0 pour quitter) : ");
+                int selectedNumber = scanner.nextInt();
+
+
+                if (selectedNumber == 0) {
+                    break; // Quitte la boucle si 0 est sélectionné
+                } else if (selectedNumber > 0 && selectedNumber <= currentStock.size()) {
+                    Ingredients selectedIngredient = null;
+                    int currentIndex = 1;
+
+                    for (Ingredients ingredient : currentStock) {
+                        if (currentIndex == selectedNumber) {
+                            selectedIngredient = ingredient;
+                            break;
+                        }
+                        currentIndex++;
                     }
-                    currentIndex++;
-                }
 
-                assert selectedIngredient != null;
-                System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getNom() + " : ");
-                int quantityToAdd = scanner.nextInt();
+                    assert selectedIngredient != null;
+                    System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getNom() + " : ");
+                    int quantityToAdd = scanner.nextInt();
 
-                if (quantityToAdd > 0) {
-                    selectedIngredient.addNb(quantityToAdd);
-                    quantitiesAdded.put(selectedIngredient, quantityToAdd);
-                    System.out.println("Stock mis à jour.");
+                    if (quantityToAdd > 0) {
+                        selectedIngredient.addNb(quantityToAdd);
+                        quantitiesAdded.put(selectedIngredient, quantityToAdd);
+                        System.out.println("Stock mis à jour.");
+                    } else {
+                        System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");
+                    }
                 } else {
-                    System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");
+                    System.out.println("Numéro invalide. Aucune modification effectuée.");
                 }
-            } else {
-                System.out.println("Numéro invalide. Aucune modification effectuée.");
             }
         }
+
         return quantitiesAdded;
     }
 
@@ -180,22 +181,23 @@ public class Manager extends Employe {
      */
     public void embaucher() {
         System.out.println("Créez le profil de l'employé :");
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            // on récupère le nom, prénom, salaire et poste de l'employé
+            System.out.print("Nom : ");
+            String nom = scanner.nextLine();
+            System.out.print("Prénom : ");
+            String prenom = scanner.nextLine();
+            System.out.print("Salaire : ");
+            int salaire = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Poste : ");
+            String poste = scanner.nextLine();
+            Employe employe = new Employe(nom, prenom, salaire, poste);
 
-        // on récupère le nom, prénom, salaire et poste de l'employé
-        System.out.print("Nom : ");
-        String nom = scanner.nextLine();
-        System.out.print("Prénom : ");
-        String prenom = scanner.nextLine();
-        System.out.print("Salaire : ");
-        int salaire = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Poste : ");
-        String poste = scanner.nextLine();
-        Employe employe = new Employe(nom, prenom, salaire, poste);
+            // on écrit le profil employé dans le répertoire "employes/"
+            employe.ecrireEmploye();
+        }
 
-        // on écrit le profil employé dans le répertoire "employes/"
-        employe.ecrireEmploye();
         System.out.println("Profil employé créé, il a été ajouté aux employés disponibles.");
     }
 
@@ -206,27 +208,27 @@ public class Manager extends Employe {
      */
     public void licencier() {
         System.out.println("Vous êtes sur l'écran de licenciement : ");
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            // on récupère le nom et prénom de l'employé à licencier
+            System.out.print("Nom : ");
+            String nom = scanner.nextLine();
+            System.out.print("Prénom : ");
+            String prenom = scanner.nextLine();
 
-        // on récupère le nom et prénom de l'employé à licencier
-        System.out.print("Nom : ");
-        String nom = scanner.nextLine();
-        System.out.print("Prénom : ");
-        String prenom = scanner.nextLine();
+            // On récupère le fichier de l'employé
+            final String fichier_employe = "employes/" + nom + "_" + prenom + ".ser";
+            File employe = new File(fichier_employe);
 
-        // On récupère le fichier de l'employé
-        final String fichier_employe = "employes/" + nom + "_" + prenom + ".ser";
-        File employe = new File(fichier_employe);
-
-        // Si le fichier existe, on le supprime
-        if (employe.exists()) {
-            if (employe.delete()) {
-                System.out.println("L'employé a été licencié.");
+            // Si le fichier existe, on le supprime
+            if (employe.exists()) {
+                if (employe.delete()) {
+                    System.out.println("L'employé a été licencié.");
+                } else {
+                    System.err.println("Erreur lors de la suppression du fichier : " + fichier_employe);
+                }
             } else {
-                System.err.println("Erreur lors de la suppression du fichier : " + fichier_employe);
+                System.out.println("Cet employé n'existe pas.");
             }
-        } else {
-            System.out.println("Cet employé n'existe pas.");
         }
 
     }
@@ -306,49 +308,49 @@ public class Manager extends Employe {
         ArrayList<Employe> equipe = new ArrayList<>();
         ArrayList<Employe> employesDispos = getEmployesDisponibles();
         String operation;
-        Scanner sc = new Scanner(System.in);
+        try (Scanner sc = new Scanner(System.in)) {
+            do {
+                System.out.println("Vous avez actuellement sélectionné " + equipe.size() + " " + poste + "s.");
+                System.out.println("1. Afficher tous les employés");
+                System.out.println("2. Sélectionner un employé");
+                System.out.println("3. pour quitter");
+                System.out.print("> ");
+                operation = sc.nextLine();
 
-        do {
-            System.out.println("Vous avez actuellement sélectionné " + equipe.size() + " " + poste + "s.");
-            System.out.println("1. Afficher tous les employés");
-            System.out.println("2. Sélectionner un employé");
-            System.out.println("3. pour quitter");
-            System.out.print("> ");
-            operation = sc.nextLine();
+                switch (operation) {
+                    case "1":
+                        displayEmployesDisponibles();
+                        break;
+                    case "2":
+                        System.out.print("Nom : ");
+                        String nom = sc.nextLine();
+                        System.out.print("Prénom : ");
+                        String prenom = sc.nextLine();
+                        try {
+                            // on va récupérer l'employé en question
+                            // on vérifie qu'il s'agit bien d'un cuisinier et qu'il existe
+                            Employe nouveau = selectEmploye(nom, prenom, poste, employesDispos);
 
-            switch (operation) {
-                case "1":
-                    displayEmployesDisponibles();
-                    break;
-                case "2":
-                    System.out.print("Nom : ");
-                    String nom = sc.nextLine();
-                    System.out.print("Prénom : ");
-                    String prenom = sc.nextLine();
-                    try {
-                        // on va récupérer l'employé en question
-                        // on vérifie qu'il s'agit bien d'un cuisinier et qu'il existe
-                        Employe nouveau = selectEmploye(nom, prenom, poste, employesDispos);
-
-                        // On vérifie qu'il n'est pas déjà sélectionné
-                        for (Employe employe : equipe) {
-                            if (employe.getNom().equals(nouveau.getNom()) &&
-                                    employe.getPrenom().equals(nouveau.getPrenom())) {
-                                throw new ErrorHandler(poste + " déjà sélectionné.");
+                            // On vérifie qu'il n'est pas déjà sélectionné
+                            for (Employe employe : equipe) {
+                                if (employe.getNom().equals(nouveau.getNom()) &&
+                                        employe.getPrenom().equals(nouveau.getPrenom())) {
+                                    throw new ErrorHandler(poste + " déjà sélectionné.");
+                                }
                             }
+                            equipe.add(nouveau);
+                        } catch (ErrorHandler e) {
+                            System.err.println(e.getMessage());
                         }
-                        equipe.add(nouveau);
-                    } catch (ErrorHandler e) {
-                        System.err.println(e.getMessage());
-                    }
-                    break;
-                case "3":
-                    break;
-                default:
-                    System.err.println("Opération non supportée.");
-                    break;
-            }
-        } while (!operation.equals("3"));
+                        break;
+                    case "3":
+                        break;
+                    default:
+                        System.err.println("Opération non supportée.");
+                        break;
+                }
+            } while (!operation.equals("3"));
+        }
 
         return null;
     }
@@ -356,33 +358,34 @@ public class Manager extends Employe {
     @Override
     public void interfaceEmploye() {
         System.out.println("Vous êtes sur l'écran de gestion des employés : ");
-        Scanner scanner = new Scanner(System.in);
-        String operation;
+        try (Scanner scanner = new Scanner(System.in)) {
+            String operation;
 
-        do {
-            System.out.println("1. Afficher tous les employés");
-            System.out.println("2. Embaucher");
-            System.out.println("3. Licencier");
-            System.out.println("4. Retour");
-            System.out.print("> ");
-            operation = scanner.nextLine();
+            do {
+                System.out.println("1. Afficher tous les employés");
+                System.out.println("2. Embaucher");
+                System.out.println("3. Licencier");
+                System.out.println("4. Retour");
+                System.out.print("> ");
+                operation = scanner.nextLine();
 
-            switch (operation) {
-                case "1":
-                    displayEmployesDisponibles();
-                    break;
-                case "2":
-                    embaucher();
-                    break;
-                case "3":
-                    licencier();
-                    break;
-                case "4":
-                    break;
-                default:
-                    System.err.println("Opération non supportée.");
-                    break;
-            }
-        } while (!operation.equals("4"));
+                switch (operation) {
+                    case "1":
+                        displayEmployesDisponibles();
+                        break;
+                    case "2":
+                        embaucher();
+                        break;
+                    case "3":
+                        licencier();
+                        break;
+                    case "4":
+                        break;
+                    default:
+                        System.err.println("Opération non supportée.");
+                        break;
+                }
+            } while (!operation.equals("4"));
+        }
     }
 }
