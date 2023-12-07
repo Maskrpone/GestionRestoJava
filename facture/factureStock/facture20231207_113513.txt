@@ -1,0 +1,14 @@
+****************************************
+                FACTURE                
+****************************************
+
+Ingrédient
+
+Nom                 Prix      Quantité  
+
+pain                1         3         
+tomate              1         98        
+steak               3         5         
+Total Ingrédients:                      116       
+
+

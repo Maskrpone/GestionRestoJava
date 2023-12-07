@@ -94,11 +94,11 @@ public class Manager extends Employe {
     }
 
     /**
-     * @param stock Le stock à consulter
      * @return La map d'ingrédient commandé avec la quantité
      * @author Thibaut
      */
-    public Map<Ingredients, Integer> consulterStock(Stock stock) {
+    public Map<Ingredients, Integer> consulterStock() {
+        Stock stock = new Stock();
         ArrayList<Ingredients> currentStock = stock.getStock();
         Map<Ingredients, Integer> quantitiesAdded = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
@@ -152,13 +152,12 @@ public class Manager extends Employe {
     /**
      * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une map
      *
-     * @param stock Le stock à consulter
      * @return Le prix de l'augmentation stock
      * @author Thibaut
      */
-    public int consulterStockPriceToPay(Stock stock) {
+    public int consulterStockPriceToPay() {
         Map<Ingredients, Integer> ingredientAchetes;
-        ingredientAchetes = consulterStock(stock);
+        ingredientAchetes = consulterStock();
         int priceToPay = 0;
 
         for (Map.Entry<Ingredients, Integer> entry : ingredientAchetes.entrySet()) {

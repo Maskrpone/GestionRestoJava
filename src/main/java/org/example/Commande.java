@@ -35,4 +35,22 @@ public class Commande implements Serializable {
     public void setEnPreparation(boolean b) {
         this.enPreparation = b;
     }
+
+    //region Methode
+    public int calculTotal() {
+        int total = 0;
+
+        // Ajouter les prix des boissons
+        for (Boisson boisson : this.getBoissons()) {
+            total += boisson.getPrice();
+        }
+
+        // Ajouter les prix des plats
+        for (Produits produit : this.getRepas()) {
+            total += produit.getPrice();
+        }
+
+        return total;
+    }
+    //endregion
 }
