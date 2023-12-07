@@ -292,166 +292,96 @@ public class Manager extends Employe {
     }
 
     /**
-     * Fonction qui nous retourne une équipe remplissant les conditions d'ouverture du restaurant
-     *
-     * @return ArrayList<Employe> équipe complète
+     * Renvoie une équipe d'employés en fonction du poste
+     * (cuisinier, serveur ou barman)
+     * La liste d employés renvoyée est ensuite convertie pour devenir la classe que l'on souhaite
+     * @param poste le nom du poste de l'équipe qu'on veut former
+     * @return une équipe d'employés
      */
-    public ArrayList<Employe> formerEquipe() throws ErrorHandler {
-        // L'équipe qu'on va retourner
+    public ArrayList<Employe> formerEquipe(String poste) {
+        System.out.println("Interface de sélection des " + poste + "s :");
+        System.out.println("Rappel : il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
+
         ArrayList<Employe> equipe = new ArrayList<>();
-        // On récupère les employés disponibles
         ArrayList<Employe> employesDispos = getEmployesDisponibles();
-
-        // on crée trois tableaux différents afin de pouvoir s'y retrouver
-        ArrayList<Employe> cuisiniers = new ArrayList<>();
-        ArrayList<Employe> serveurs = new ArrayList<>();
-        ArrayList<Employe> barmans = new ArrayList<>();
-
-        System.out.println("Il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
-        System.out.println("Choisissez vos cuisiniers (au moins 4) :");
-
         String operation;
+        Scanner sc = new Scanner(System.in);
 
-        // interface pour constituer l'équipe de cuisinier
         do {
-            // affichage interface CLI
-            System.out.println("Vous avez actuellement sélectionné " + cuisiniers.size() + " cuisiniers.");
-            Scanner scanner = new Scanner(System.in);
+            System.out.println("Vous avez actuellement sélectionné " + equipe.size() + " " + poste + "s.");
             System.out.println("1. Afficher tous les employés");
-            System.out.println("2. Sélectionner");
-            System.out.print("(0 pour quitter) > ");
-            operation = scanner.nextLine();
+            System.out.println("2. Sélectionner un employé");
+            System.out.println("3. pour quitter");
+            System.out.print("> ");
+            operation = sc.nextLine();
 
-            // on traite les inputs
             switch (operation) {
                 case "1":
                     displayEmployesDisponibles();
                     break;
                 case "2":
                     System.out.print("Nom : ");
-                    String nom = scanner.nextLine();
+                    String nom = sc.nextLine();
                     System.out.print("Prénom : ");
-                    String prenom = scanner.nextLine();
+                    String prenom = sc.nextLine();
                     try {
                         // on va récupérer l'employé en question
                         // on vérifie qu'il s'agit bien d'un cuisinier et qu'il existe
-                        Employe nouveau = selectEmploye(nom, prenom, "cuisinier", employesDispos);
+                        Employe nouveau = selectEmploye(nom, prenom, poste, employesDispos);
 
                         // On vérifie qu'il n'est pas déjà sélectionné
-                        for (Employe cuisinier : cuisiniers) {
-                            if (cuisinier.getNom().equals(nouveau.getNom()) &&
-                                    cuisinier.getPrenom().equals(nouveau.getPrenom())) {
-                                throw new ErrorHandler("Cuisinier déjà sélectionné.");
+                        for (Employe employe : equipe) {
+                            if (employe.getNom().equals(nouveau.getNom()) &&
+                                    employe.getPrenom().equals(nouveau.getPrenom())) {
+                                throw new ErrorHandler(poste + " déjà sélectionné.");
                             }
                         }
-                        cuisiniers.add(nouveau);
+                        equipe.add(nouveau);
                     } catch (ErrorHandler e) {
                         System.err.println(e.getMessage());
                     }
+                    break;
+                case "3":
                     break;
                 default:
                     System.err.println("Opération non supportée.");
                     break;
             }
-        } while (!operation.equals("0") && cuisiniers.size() < 4);
+        } while (!operation.equals("3"));
 
-        System.out.println("Choisissez vos serveurs (au moins 2) :");
+        return null;
+    }
 
-        // interface pour constituer l'équipe de serveurs
+    @Override
+    public void interfaceEmploye() {
+        System.out.println("Vous êtes sur l'écran de gestion des employés : ");
+        Scanner scanner = new Scanner(System.in);
+        String operation;
+
         do {
-            // affichage de l'interface CLI
-            System.out.println("Vous avez actuellement sélectionné " + serveurs.size() + " serveurs.");
-            Scanner scanner = new Scanner(System.in);
             System.out.println("1. Afficher tous les employés");
-            System.out.println("2. Sélectionner");
-            System.out.print("(0 pour quitter) > ");
+            System.out.println("2. Embaucher");
+            System.out.println("3. Licencier");
+            System.out.println("4. Retour");
+            System.out.print("> ");
             operation = scanner.nextLine();
 
-            // on traite les inputs
             switch (operation) {
                 case "1":
                     displayEmployesDisponibles();
                     break;
                 case "2":
-                    System.out.print("Nom : ");
-                    String nom = scanner.nextLine();
-                    System.out.print("Prénom : ");
-                    String prenom = scanner.nextLine();
-                    try {
-                        // on va récupérer l'employé en question
-                        // on vérifie qu'il s'agit bien d'un serveur et qu'il existe
-                        Employe nouveau = selectEmploye(nom, prenom, "serveur", employesDispos);
-
-                        // On vérifie qu'il n'est pas déjà sélectionné
-                        for (Employe serveur : serveurs) {
-                            if (serveur.getNom().equals(nouveau.getNom()) &&
-                                    serveur.getPrenom().equals(nouveau.getPrenom())) {
-                                throw new ErrorHandler("Serveur déjà sélectionné.");
-                            }
-                        }
-                        serveurs.add(nouveau);
-                    } catch (ErrorHandler e) {
-                        System.err.println(e.getMessage());
-                    }
+                    embaucher();
                     break;
-                default:
-                    System.err.println("Opération non supportée.");
+                case "3":
+                    licencier();
                     break;
-
-            }
-        } while (!operation.equals("0") && serveurs.size() < 2);
-
-        System.out.println("Choisissez votre barman (1) :");
-
-        // interface pour constituer l'équipe de barman
-        do {
-            // affichage de l'interface CLI
-            System.out.println("Vous avez actuellement sélectionné " + barmans.size() + " barman.");
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("1. Afficher tous les employés");
-            System.out.println("2. Sélectionner");
-            System.out.print("(0 pour quitter) > ");
-            operation = scanner.nextLine();
-
-            // on traite les inputs
-            switch (operation) {
-                case "1":
-                    displayEmployesDisponibles();
-                    break;
-                case "2":
-                    System.out.print("Nom : ");
-                    String nom = scanner.nextLine();
-                    System.out.print("Prénom : ");
-                    String prenom = scanner.nextLine();
-                    try {
-                        // on va récupérer l'employé en question
-                        // on vérifie qu'il s'agit bien d'un barman et qu'il existe
-                        Employe nouveau = selectEmploye(nom, prenom, "barman", employesDispos);
-                        for (Employe barman : barmans) {
-                            if (barman.getNom().equals(nouveau.getNom()) &&
-                                    barman.getPrenom().equals(nouveau.getPrenom())) {
-                                throw new ErrorHandler("Barman déjà sélectionné.");
-                            }
-                        }
-                        barmans.add(nouveau);
-                    } catch (ErrorHandler e) {
-                        System.err.println(e.getMessage());
-                    }
+                case "4":
                     break;
                 default:
                     System.err.println("Opération non supportée.");
                     break;
             }
-        } while (!operation.equals("0") && barmans.isEmpty());
-
-        // On vérifie ce que si l'équipe est bien complète, on throw une erreur sinon
-        if (barmans.isEmpty() || cuisiniers.size() < 4 || serveurs.size() < 2) {
-            throw new ErrorHandler("L'équipe n'est pas complète.");
-        }
-        // on assemble l'équipe
-        equipe.addAll(cuisiniers);
-        equipe.addAll(serveurs);
-        equipe.addAll(barmans);
-        return equipe;
+        } while (!operation.equals("4"));
     }
 }
