@@ -84,13 +84,14 @@ public class FileText {
             writer.newLine();
             writer.newLine();
 
-            writer.write("Ingrédient");
-            writer.newLine();
             writer.newLine();
 
             // Écrire la légende des ingrédients
             writer.write(String.format("%-20s%-10s%-10s", "Nom", "Prix", "Quantité"));
             writer.newLine();
+            writer.newLine();
+
+            writer.write("Ingrédient");
             writer.newLine();
 
             // Écrire les détails de la facture

@@ -138,6 +138,7 @@ public class Manager extends Employe {
                 if (quantityToAdd > 0) {
                     selectedIngredient.addNb(quantityToAdd);
                     quantitiesAdded.put(selectedIngredient, quantityToAdd);
+                    selectedIngredient.ecritureFichier(false);
                     System.out.println("Stock mis à jour.");
                 } else {
                     System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");
