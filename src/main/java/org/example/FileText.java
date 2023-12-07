@@ -66,7 +66,7 @@ public class FileText {
         }
     }
 
-    public void writeStockToFile(Map<Ingredients, Integer> map){
+    public void writeStockToFile(Map<Ingredients, Integer> map, Map<Boisson, Integer> mapBoisson){
         // Générer le nom de fichier en fonction de la date et de l'heure actuelles
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String fileName = "facture" + dateFormat.format(new Date()) + ".txt";
@@ -101,12 +101,30 @@ public class FileText {
                 writer.newLine();
             }
 
+            writer.newLine();
+            writer.write("Boisson");
+            writer.newLine();
+            writer.newLine();
+
+            for (Map.Entry<Boisson, Integer> entry : mapBoisson.entrySet()) {
+                Boisson boisson = entry.getKey();
+                int quantity = entry.getValue();
+                writer.write(String.format("%-20s%-10s%-10s", boisson.getName(), boisson.getPrice(), quantity));
+                writer.newLine();
+            }
+
             int total = 0;
             // Ajouter les prix des ingrédients avec leurs quantités respectives
             for (Map.Entry<Ingredients, Integer> entry : map.entrySet()) {
                 Ingredients ingredient = entry.getKey();
                 int quantity = entry.getValue();
                 total += ingredient.getPrice() * quantity;
+            }
+            // Ajouter les prix des Boissons avec leurs quantités respectives
+            for (Map.Entry<Boisson, Integer> entry : mapBoisson.entrySet()) {
+                Boisson boisson = entry.getKey();
+                int quantity = entry.getValue();
+                total += boisson.getPrice() * quantity;
             }
 
             // Écrire le total

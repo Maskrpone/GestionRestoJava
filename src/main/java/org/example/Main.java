@@ -28,7 +28,9 @@ public class Main {
 
         Map<Ingredients, Integer> map = manager.consulterStock();
 
-        f.writeStockToFile(map);
+        Map<Boisson, Integer> map1 = manager.consulterStockBoisson();
+
+        f.writeStockToFile(map, map1);
     }
 }
 

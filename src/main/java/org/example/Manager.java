@@ -168,6 +168,54 @@ public class Manager extends Employe {
         return priceToPay;
     }
 
+    public Map<Boisson, Integer> consulterStockBoisson(){
+        Stock stock = new Stock();
+        ArrayList<Boisson> currentStock = stock.getStockBoisson();
+        Map<Boisson, Integer> quantitiesAdded = new HashMap<>();
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            int index = 1;
+            System.out.println("Stock actuel :");
+            for (Boisson boisson : currentStock) {
+                int quantite = boisson.getNb();
+                System.out.println(index + ". " + boisson.getName() + ": " + quantite);
+                index++;
+            }
+            System.out.print("Sélectionnez le numéro de la boisson à augmenter (0 pour quitter) : ");
+            int selectedNumber = scanner.nextInt();
+            if (selectedNumber == 0) {
+                break; // Quitte la boucle si 0 est sélectionné
+            } else if (selectedNumber > 0 && selectedNumber <= currentStock.size()) {
+                Boisson selectedBoisson = null;
+                int currentIndex = 1;
+                for (Boisson boisson : currentStock) {
+                    if (currentIndex == selectedNumber) {
+                        selectedBoisson = boisson;
+                        break;
+                    }
+                    currentIndex++;
+                }
+                assert selectedBoisson != null;
+                System.out.print("Entrez la quantité à ajouter pour " + selectedBoisson.getName() + " : ");
+                int quantityToAdd = scanner.nextInt();
+                if (quantityToAdd > 0) {
+                    selectedBoisson.addNb(quantityToAdd);
+                    quantitiesAdded.put(selectedBoisson, quantityToAdd);
+                    selectedBoisson.ecritureFichier(false);
+                    System.out.println("Stock mis à jour.");
+                } else {
+                    System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");
+                }
+            } else {
+                System.out.println("Numéro invalide. Aucune modification effectuée.");
+            }
+        }
+        return quantitiesAdded;
+    }
+
+
+
+
     //endregion
 
     //region MethodesEmployes

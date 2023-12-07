@@ -1,0 +1,20 @@
+****************************************
+                FACTURE                
+****************************************
+
+Ingrédient
+
+Nom                 Prix      Quantité  
+
+salade              1         21        
+oignon              1         1         
+fromage             2         65        
+steak               3         4         
+Boisson
+
+limonade            4         5         
+jus                 1         21        
+eau                 0         1         
+Total Ingrédients:                      205       
+
+
