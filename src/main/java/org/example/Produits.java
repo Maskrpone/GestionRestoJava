@@ -2,10 +2,9 @@ package org.example;
 
 import org.json.JSONArray;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class Produits implements Serializable {
+public class Produits {
     private final String nom;
     private final int price;
     private boolean estfini;
@@ -70,4 +69,5 @@ public class Produits implements Serializable {
                 ", tempsPrep=" + tempsPrep +
                 '}';
     }
+
 }

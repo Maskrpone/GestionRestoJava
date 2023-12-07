@@ -1,7 +1,5 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Barman extends Preparateur {
 
@@ -17,7 +15,7 @@ public class Barman extends Preparateur {
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande
         for (Boisson boisson : commande.getBoissons()) {
-            System.out.println(boisson);
+            // System.out.println(boisson);
             //Supprimer des stocks
             supprimerDesStocks(boisson, stock);
 
@@ -27,7 +25,7 @@ public class Barman extends Preparateur {
             System.out.println("Boisson " + boisson.getName() + " prêt pour la table " + commande.getTable());
         }
 
-        System.out.println("Commande pour la table " + commande.getTable() + " est prête !");
+        System.out.println("Commande des BOISSONS pour la table " + commande.getTable() + " est prête !");
     }
 
     private void supprimerDesStocks(Boisson boisson, Stock stock){

@@ -46,7 +46,7 @@ public class Cuisinier extends Preparateur{
             System.out.println("Plat " + produit.getNom() + " prêt pour la table " + commande.getTable());
         }
 
-        System.out.println("Commande pour la table " + commande.getTable() + " est prête !");
+        System.out.println("Commande des PLATS pour la table " + commande.getTable() + " est prête !");
     }
 
     /**

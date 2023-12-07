@@ -1,20 +1,29 @@
 package org.example;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class Menu {
     private ArrayList<Produits> cartePlat;
     private ArrayList<Boisson> carteBoisson;
 
-
-    //region Constructor
+    // region Constructor
 
     public Menu() throws IOException {
         JSON j = new JSON();
@@ -39,8 +48,7 @@ public class Menu {
                     platNom,
                     platData.getInt("prix"),
                     new HashMap<>(),
-                    platData.getInt("preparation")
-            );
+                    platData.getInt("preparation"));
 
             // Mettre à jour la liste des ingrédients en fonction du JSON
             plat.updateIngredientsList(platData.getJSONArray("ingredients"));
@@ -62,9 +70,9 @@ public class Menu {
         }
     }
 
-    //endregion
+    // endregion
 
-    //region Getter
+    // region Getter
 
     public ArrayList<Produits> getCartePlat() {
         return cartePlat;
@@ -73,37 +81,152 @@ public class Menu {
     public ArrayList<Boisson> getCarteBoisson() {
         return carteBoisson;
     }
-    //endregion
+    // endregion
 
-    //region Methode
+    // region Methode
 
     public void afficherMenu() {
-        System.out.println("----- Carte des plats -----");
-        afficherCartePlat();
+        // System.out.println("----- Carte des plats -----");
+        // afficherCartePlat();
 
-        System.out.println("\n----- Carte des boissons -----");
-        afficherCarteBoisson();
-    }
+        // System.out.println("\n----- Carte des boissons -----");
+        // afficherCarteBoisson();
+        // }
 
-    private void afficherCartePlat() {
-        System.out.println("--------------------------------------------------");
-        System.out.println("|\t\t   Nom du plat   \t\t|\t\t        Prix        \t\t|");
-        System.out.println("--------------------------------------------------");
-        for (Produits plat : cartePlat) {
-            System.out.printf("|\t %-15s \t\t\t|\t %-18s \t\t\t|\n", plat.getNom(), plat.getPrice() + " euros");
+        // private void afficherCartePlat() {
+        // System.out.println("--------------------------------------------------");
+        // System.out.println("|\t\t Nom du plat \t\t|\t\t Prix \t\t|");
+        // System.out.println("--------------------------------------------------");
+        // for (Produits plat : cartePlat) {
+        // System.out.printf("|\t %-15s \t\t\t|\t %-18s \t\t\t|\n", plat.getNom(),
+        // plat.getPrice() + " euros");
+        // }
+        // System.out.println("--------------------------------------------------");
+        // }
+
+        // private void afficherCarteBoisson() {
+        // System.out.println("--------------------------------------------------");
+        // System.out.println("|\t Nom de la boisson \t|\t Prix \t|");
+        // System.out.println("--------------------------------------------------");
+        // for (Boisson boisson : carteBoisson) {
+        // System.out.printf("|\t %-21s \t|\t %-18s \t|\n", boisson.getName(),
+        // boisson.getPrice() + " euros");
+        // }
+        // System.out.println("--------------------------------------------------");
+        // }
+
+        Menu menu = this;
+        Commande commande = new Commande(12, new ArrayList<>(), new ArrayList<>());
+
+        // Créer une fenêtre
+        JFrame frame = new JFrame("Le Menu !");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Créer un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(menu.getCartePlat().size() + menu.getCarteBoisson().size() + 9, 1));
+        panel.setBackground(Color.WHITE);
+
+        // Ajouter un titre
+        JLabel titleLabel = new JLabel("Le Menu !");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(titleLabel);
+
+        // Ajouter une séparation entre les plats et les boissons
+        JLabel separationLabel = new JLabel("Plats");
+        separationLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        separationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(separationLabel);
+
+        // Ajouter des boutons pour chaque plat
+        for (Produits plat : menu.getCartePlat()) {
+            JButton button = new JButton(plat.getNom() + " - " + plat.getPrice() + " euros");
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
+            button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Réagir au clic sur le plat
+                    System.out.println("Vous avez choisi le plat : " + plat.getNom());
+
+                    // Ajouter le plat à la commande
+                    commande.addRepas(plat);
+                }
+            });
+            panel.add(button);
         }
-        System.out.println("--------------------------------------------------");
-    }
 
-    private void afficherCarteBoisson() {
-        System.out.println("--------------------------------------------------");
-        System.out.println("|\t   Nom de la boisson   \t|\t        Prix        \t|");
-        System.out.println("--------------------------------------------------");
-        for (Boisson boisson : carteBoisson) {
-            System.out.printf("|\t %-21s \t|\t %-18s \t|\n", boisson.getName(), boisson.getPrice() + " euros");
+        // Ajouter une séparation entre les plats et les boissons
+        separationLabel = new JLabel("Boissons");
+        separationLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        separationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(separationLabel);
+
+        // Ajouter des boutons pour chaque boisson
+        for (Boisson boisson : menu.getCarteBoisson()) {
+            JButton button = new JButton(boisson.getName() + " - " + boisson.getPrice() + " euros");
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
+            button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Réagir au clic sur la boisson
+                    System.out.println("Vous avez choisi la boisson : " + boisson.getName());
+
+                    // Ajouter la boisson à la commande
+                    commande.addBoisson(boisson);
+                }
+            });
+            panel.add(button);
         }
-        System.out.println("--------------------------------------------------");
+
+        // Ajouter une séparation entre les plats et les boissons
+        separationLabel = new JLabel(" ");
+        separationLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        separationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(separationLabel);
+
+        // Voir la commande
+        JButton buttonCommande = new JButton("Voir la commande");
+        buttonCommande.setFont(new Font("Arial", Font.BOLD, 16));
+        buttonCommande.setBackground(Color.GREEN);
+        buttonCommande.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        buttonCommande.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi de voir la commande");
+
+                // Afficher la commande
+                commande.afficherCommande();
+            }
+        });
+        panel.add(buttonCommande);
+
+        JButton button = new JButton("FERMER");
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setBackground(Color.RED);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi de fermer le menu");
+
+                // Fermer la fenêtre
+                frame.dispose();
+            }
+        });
+        panel.add(button);
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(400, 800);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+
+        // endregion
     }
 
-    //endregion
+    // ...
 }
