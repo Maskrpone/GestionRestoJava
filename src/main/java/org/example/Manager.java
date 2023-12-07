@@ -223,6 +223,9 @@ public class Manager extends Employe {
 
     //region MethodesEmployes
 
+    /**
+     * Permet de récupérer les employes à partir d'un fichier json contenant des employes par défaut afin d'initialiser les fichiers serialies plus facilement
+     */
     public void jsonEmployesToSerialize() {
         try {
             // Lire le fichier JSON en tant que chaîne
