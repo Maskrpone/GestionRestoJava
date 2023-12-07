@@ -3,21 +3,22 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Employe implements Serializable {
+public class Employe extends Thread implements Serializable, Runnable {
+
+    // region private
     private final String nom;
     private final String prenom;
     private final int salaire;
     private int jours_travailles;
     private final String poste;
 
+    //endregion
+
     public void setJours_travailles(int jours_travailles) {
         this.jours_travailles = jours_travailles;
     }
 
-    public int getJours_travailles() {
-        return jours_travailles;
-    }
-
+    // region Constructor
     public Employe(String nom, String prenom, int salaire, String poste) {
         this.nom = nom;
         this.prenom = prenom;
@@ -25,6 +26,7 @@ public class Employe implements Serializable {
         this.jours_travailles = 0;
         this.poste = poste;
     }
+    //endregion
 
     //region Getter
     public String getNom() {
@@ -41,6 +43,10 @@ public class Employe implements Serializable {
 
     public String getPoste() {
         return poste;
+    }
+
+    public int getJours_travailles() {
+        return jours_travailles;
     }
 
     //endregion
@@ -79,5 +85,17 @@ public class Employe implements Serializable {
     public void afficherConcis() {
         System.out.println(this.nom + " " + this.prenom + " (" + this.poste + ")");
     }
+
+    public void interfaceEmploye() {
+        System.out.println("Interface employé, ne devrait jamais être utilisée comme cela");
+    }
+
     //endregion
+
+    // region Runnable
+    @Override
+    public void run() {
+        interfaceEmploye();
+    }
+    // endregion
 }
