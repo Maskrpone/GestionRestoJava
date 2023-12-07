@@ -26,6 +26,14 @@ public class Employe extends Thread implements Serializable, Runnable {
         this.jours_travailles = 0;
         this.poste = poste;
     }
+
+    public Employe(String nom, String prenom, int salaire, int jours_travailles, String poste) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.salaire = salaire;
+        this.jours_travailles = jours_travailles;
+        this.poste = poste;
+    }
     //endregion
 
     //region Getter

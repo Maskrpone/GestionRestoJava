@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Manager manager = new Manager("Lemichel", "Thibaut", 2000, "Manager");
 
+        /*
         Menu menu = new Menu();
 
         ArrayList<Boisson> boissons = new ArrayList<>();
@@ -26,11 +27,16 @@ public class Main {
         Commande commande = new Commande(1, boissons, plats);
         FileText f = new FileText();
 
-        Map<Ingredients, Integer> map = manager.consulterStock();
+         */
 
-        Map<Boisson, Integer> map1 = manager.consulterStockBoisson();
+        //Map<Ingredients, Integer> map = manager.consulterStock();
 
-        f.writeStockToFile(map, map1);
+        //Map<Boisson, Integer> map1 = manager.consulterStockBoisson();
+
+        //manager.displayEmployesDisponibles();
+
+        manager.jsonEmployesToSerialize();
+        manager.displayEmployesDisponibles();
     }
 }
 

@@ -1,0 +1,81 @@
+{
+  "employe": [
+    {
+      "nom": "Black",
+      "prenom": "Jack",
+      "salaire": 10,
+      "jours_travailles": 0,
+      "poste": "manager"
+    },
+    {
+      "nom": "Corleone",
+      "prenom": "Freeze",
+      "salaire": 60,
+      "jours_travailles": 0,
+      "poste": "serveur"
+    },
+    {
+      "nom": "Deparis",
+      "prenom": "Hippolyte",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "barman"
+    },
+    {
+      "nom": "Kaki",
+      "prenom": "Santana",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "barman"
+    },
+    {
+      "nom": "Lemichel",
+      "prenom": "Thibaut",
+      "salaire": 35,
+      "jours_travailles": 0,
+      "poste": "cuisinier"
+    },
+    {
+      "nom": "Montuori",
+      "prenom": "Milo",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "serveur"
+    },
+    {
+      "nom": "Norsacce",
+      "prenom": "Belusconi",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "cuisinier"
+    },
+    {
+      "nom": "Ola",
+      "prenom": "Zermi",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "cuisinier"
+    },
+    {
+      "nom": "Osirus",
+      "prenom": "Jack",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "barman"
+    },
+    {
+      "nom": "Vico",
+      "prenom": "Isaure",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "serveur"
+    },
+    {
+      "nom": "Zuukou",
+      "prenom": "Maizie",
+      "salaire": 45,
+      "jours_travailles": 0,
+      "poste": "cuisinier"
+    }
+  ]
+}
