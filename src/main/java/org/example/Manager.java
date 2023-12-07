@@ -1,10 +1,12 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * @author Hippolyte & Thibaut
@@ -220,6 +222,36 @@ public class Manager extends Employe {
     //endregion
 
     //region MethodesEmployes
+
+    public void jsonEmployesToSerialize() {
+        try {
+            // Lire le fichier JSON en tant que chaîne
+            String employeJson = new String(Files.readAllBytes(Paths.get("employe.json")));
+
+            // Créer un objet JSON à partir de la chaîne
+            JSONObject jsonObject = new JSONObject(employeJson);
+
+            // Obtenir le tableau d'employés à partir de la clé "employes"
+            JSONArray employesArray = jsonObject.getJSONArray("employe");
+
+            // Parcourir les objets du tableau
+            for (int i = 0; i < employesArray.length(); i++) {
+                JSONObject employeData = employesArray.getJSONObject(i);
+                String nom = employeData.getString("nom");
+                String prenom = employeData.getString("prenom");
+                int salaire = employeData.getInt("salaire");
+                int joursTravailles = employeData.getInt("jours_travailles");
+                String poste = employeData.getString("poste");
+
+                Employe employe = new Employe(nom, prenom, salaire, joursTravailles, poste);
+
+                employe.ecrireEmploye();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * Permet de créer un employé et de l'ajouter à la liste des employés disponibles
