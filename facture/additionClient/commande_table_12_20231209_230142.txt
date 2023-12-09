@@ -1,0 +1,13 @@
+Commande table n° 12 - 2023-12-09 23:01:42
+
+Boisson:
+	jus - 1
+	biere - 5
+
+Plat:
+	burger-viande - 15
+	pizza-fromage-champignon - 12
+	potage-oignon - 8
+	potage-oignon - 8
+
+Total: 49

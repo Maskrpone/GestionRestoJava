@@ -1,0 +1,10 @@
+Commande table n° 12 - 2023-12-09 23:43:58
+
+Boisson:
+	biere - 5
+	eau - 0
+	biere - 5
+
+Plat:
+
+Total: 10

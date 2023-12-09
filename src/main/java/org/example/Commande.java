@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class Commande implements Serializable {
     private final int table;
@@ -39,8 +42,24 @@ public class Commande implements Serializable {
         return repas;
     }
 
+    public String getRepasAffi() {
+        String repasAffi = "";
+        for (Produits plat : repas) {
+            repasAffi += plat.getNom() + " ";
+        }
+        return repasAffi;
+    }
+
     public ArrayList<Boisson> getBoissons() {
         return boissons;
+    }
+
+    public String getBoissonsAffi() {
+        String boissonsAffi = "";
+        for (Boisson boisson : boissons) {
+            boissonsAffi += boisson.getName() + " ";
+        }
+        return boissonsAffi;
     }
     // endregion
 
@@ -114,41 +133,14 @@ public class Commande implements Serializable {
                 // Fermer la fenêtre
                 frame.dispose();
 
-                // Créer et démarrer les threads pour les actions en parallèle
-                Thread cuisinierThread = new Thread(new Runnable() {
-                    public void run() {
-                        Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
-                        cuisinier.cuisinerCommande(Commande.this);
-                    }
-                });
-
-                Thread barmanThread = new Thread(new Runnable() {
-                    public void run() {
-                        Barman barman = new Barman("Bob", "Leponge", 2, "Cuisinier");
-                        barman.preparerBoisson(Commande.this);
-                    }
-                });
-
-                Commande.this.setEnPreparation(true);
-
-                cuisinierThread.start();
-                barmanThread.start();
-
-                // Dès que les threads sont terminés, afficher la facture
-                try {
-                    cuisinierThread.join();
-                    barmanThread.join();
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
+                // Envoyer la commande au serveur MAIN
+                try (Socket socket = new Socket("localhost", 1234)) {
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                    outputStream.writeObject(Commande.this);
+                    outputStream.flush();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
                 }
-
-                Commande.this.setEnPreparation(false);
-
-                FileText f = new FileText();
-
-                f.writeCommandeToFile(Commande.this);
-
-                afficherFacture();
 
             }
         });

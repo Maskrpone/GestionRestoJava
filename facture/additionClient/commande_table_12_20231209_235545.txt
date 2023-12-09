@@ -1,0 +1,16 @@
+Commande table n° 12 - 2023-12-09 23:55:45
+
+Boisson:
+	biere - 5
+	cidre - 5
+	jus - 1
+	jus - 1
+
+Plat:
+	pizza-fromage-champignon - 12
+	burger-viande - 15
+	burger - 15
+	pizza-fromage-champignon - 12
+	pizza-pepperoni - 12
+
+Total: 78

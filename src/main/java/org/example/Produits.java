@@ -2,9 +2,10 @@ package org.example;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Produits {
+public class Produits implements Serializable{
     private final String nom;
     private final int price;
     private boolean estfini;

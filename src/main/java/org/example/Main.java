@@ -1,6 +1,8 @@
 package org.example;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,7 +12,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
 public class Main {
+    private static ArrayList<Commande> commandes = new ArrayList<>();
+
     public static void main(String[] args) throws IOException {
 
         Menu menu = new Menu();
@@ -99,6 +107,91 @@ public class Main {
         // //barman.preparerBoisson(commande);
         // menu.afficherMenu();
 
+        Thread serverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try (// Créer un serveur socket
+                        ServerSocket serverSocket = new ServerSocket(1234)) {
+                    System.out.println("Serveur en attente de connexion...");
+
+                    while (true) {
+                        // Accepter une connexion
+                        Socket socket = serverSocket.accept();
+                        System.out.println("Connexion acceptée : " + socket);
+
+                        // Créer un ObjectInputStream pour recevoir les commandes
+                        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+
+                        // Recevoir la commande
+                        Commande commande = (Commande) inputStream.readObject();
+                        System.out.println("Commande reçue : " + commande);
+
+                        // Ajouter la commande à la liste des commandes pour le bar
+                        try (Socket socketAffi = new Socket("localhost", 1235)) {
+                            ObjectOutputStream outputStream = new ObjectOutputStream(socketAffi.getOutputStream());
+                            outputStream.writeObject(commande);
+                            outputStream.flush();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+
+                        // Ajouter la commande à la liste des commandes pour la cuisine
+                        try (Socket socketAffi = new Socket("localhost", 1236)) {
+                            ObjectOutputStream outputStream = new ObjectOutputStream(socketAffi.getOutputStream());
+                            outputStream.writeObject(commande);
+                            outputStream.flush();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                        
+
+                        // Créer et démarrer les threads pour les actions en parallèle
+                        Thread cuisinierThread = new Thread(new Runnable() {
+                            public void run() {
+                                Cuisinier cuisinier = new Cuisinier("Bob", "Leponge", 2, "Cuisinier");
+                                cuisinier.cuisinerCommande(commande);
+                            }
+                        });
+
+                        Thread barmanThread = new Thread(new Runnable() {
+                            public void run() {
+                                Barman barman = new Barman("Patrick", "LetoileDeMer", 2, "Barman");
+                                barman.preparerBoisson(commande);
+                            }
+                        });
+
+                        commande.setEnPreparation(true);
+
+                        cuisinierThread.start();
+                        barmanThread.start();
+
+                        // Dès que les threads sont terminés, afficher la facture
+                        try {
+                            cuisinierThread.join();
+                            barmanThread.join();
+                        } catch (InterruptedException interruptedException) {
+                            interruptedException.printStackTrace();
+                        }
+
+                        FileText f = new FileText();
+
+                        f.writeCommandeToFile(commande);
+
+                        commande.afficherFacture();
+
+                        // Fermer la connexion
+                        socket.close();
+                    }
+                } catch (ClassNotFoundException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        serverThread.start();
 
         // Créer une fenêtre
         JFrame frame = new JFrame("Gestion du restaurant");
@@ -106,8 +199,7 @@ public class Main {
 
         // Créer un panneau
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout( 3, 2));
-
+        panel.setLayout(new GridLayout(3, 2));
 
         // Ajouter des boutons pour chaque écrans
         JButton button = new JButton("Serveur (Prise de commande)");
@@ -125,6 +217,7 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 // Réagir au clic sur la boisson
                 System.out.println("Vous avez choisi Barman");
+                EcransComm.affichageCommandeBar();
             }
         });
         panel.add(button);
@@ -134,6 +227,7 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 // Réagir au clic sur la boisson
                 System.out.println("Vous avez choisi Cuisinier");
+                EcransComm.affichageCommandeCuisine();
             }
         });
         panel.add(button);
@@ -147,7 +241,6 @@ public class Main {
         });
         panel.add(button);
 
-
         button = new JButton("Administrateur (Gestion des employés et stock)");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -156,7 +249,6 @@ public class Main {
             }
         });
         panel.add(button);
-
 
         // Ajouter le panneau à la fenêtre
         frame.getContentPane().add(panel);
@@ -167,6 +259,22 @@ public class Main {
         // Rendre la fenêtre visible
         frame.setVisible(true);
 
-
     }
+
+    public static ArrayList<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public static void setCommandes(ArrayList<Commande> commandes) {
+        Main.commandes = commandes;
+    }
+
+    public static void addCommande(Commande commande) {
+        commandes.add(commande);
+    }
+
+    public static void removeCommande(Commande commande) {
+        commandes.remove(commande);
+    }
+
 }

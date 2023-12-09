@@ -1,0 +1,9 @@
+Commande table n° 12 - 2023-12-09 23:01:48
+
+Boisson:
+	eau - 0
+
+Plat:
+	potage-oignon - 8
+
+Total: 8

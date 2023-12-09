@@ -1,0 +1,9 @@
+Commande table n° 12 - 2023-12-09 22:46:38
+
+Boisson:
+	limonade - 4
+
+Plat:
+	burger-viande - 15
+
+Total: 19

@@ -29,7 +29,6 @@ public class Cuisinier extends Preparateur{
 
     //region Methode
     public void cuisinerCommande(Commande commande) {
-        Stock stock = new Stock();
         System.out.println( this.getNom() + ", un de nos cuisinier, en train de préparer la commande pour la table " + commande.getTable());
         commande.setEnPreparation(true);
         // Parcourir la liste des plats de la commande
