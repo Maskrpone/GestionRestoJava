@@ -86,34 +86,6 @@ public class Menu {
     // region Methode
 
     public void afficherMenu() {
-        // System.out.println("----- Carte des plats -----");
-        // afficherCartePlat();
-
-        // System.out.println("\n----- Carte des boissons -----");
-        // afficherCarteBoisson();
-        // }
-
-        // private void afficherCartePlat() {
-        // System.out.println("--------------------------------------------------");
-        // System.out.println("|\t\t Nom du plat \t\t|\t\t Prix \t\t|");
-        // System.out.println("--------------------------------------------------");
-        // for (Produits plat : cartePlat) {
-        // System.out.printf("|\t %-15s \t\t\t|\t %-18s \t\t\t|\n", plat.getNom(),
-        // plat.getPrice() + " euros");
-        // }
-        // System.out.println("--------------------------------------------------");
-        // }
-
-        // private void afficherCarteBoisson() {
-        // System.out.println("--------------------------------------------------");
-        // System.out.println("|\t Nom de la boisson \t|\t Prix \t|");
-        // System.out.println("--------------------------------------------------");
-        // for (Boisson boisson : carteBoisson) {
-        // System.out.printf("|\t %-21s \t|\t %-18s \t|\n", boisson.getName(),
-        // boisson.getPrice() + " euros");
-        // }
-        // System.out.println("--------------------------------------------------");
-        // }
 
         Menu menu = this;
         Commande commande = new Commande(12, new ArrayList<>(), new ArrayList<>());

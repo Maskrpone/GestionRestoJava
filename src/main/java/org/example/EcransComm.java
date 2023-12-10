@@ -295,6 +295,79 @@ public class EcransComm {
     }
 
     public static void affichageManager() {
+        // Créer une fenêtre
+        JFrame frame = new JFrame("Manager");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Créer un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 1));
+
+        // Ajouter des boutons pour chaque écrans
+        JButton button = new JButton("Manager Equipe");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi l'equipe");
+                Manager.formerEquipe();
+            }
+        });
+        panel.add(button);
+
+        button = new JButton("Manager Résultat");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi les résultat");
+                // Manager.resultatJournee();
+
+                JFrame fenetre = new JFrame();
+                fenetre.setTitle("Résultats");
+                fenetre.setSize(500, 500);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(2, 1));
+
+                // Tableau pour afficher les commandes
+                JButton button = new JButton("Résultats de la journée");
+
+                button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Réagir au clic sur la boisson
+                        System.out.println("Vous avez choisi les résultats de la journée");
+                        Manager.resultatJournee();
+                        fenetre.dispose();
+                    }
+                });
+
+                panel.add(button);
+
+                JButton button2 = new JButton("Résultats totaux");
+                button2.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Réagir au clic sur la boisson
+                        System.out.println("Vous avez choisi les résultats totaux");
+                        Manager.resultatTotal();
+                        fenetre.dispose();
+                    }
+                });
+
+                panel.add(button2);
+                fenetre.setContentPane(panel);
+                fenetre.setVisible(true);
+            }
+        });
+        panel.add(button);
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
 
     }
+    
 }

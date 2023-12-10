@@ -7,7 +7,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,12 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 
 /**
  * @author Hippolyte & Thibaut
@@ -325,26 +329,26 @@ public class Manager extends Employe {
     public static void licencier() {
         JFrame frame = new JFrame("Licencier un employé");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
-    
+
         JTextField nom = new JTextField();
         panel.add(new JLabel("Nom:"));
         panel.add(nom);
-    
+
         JTextField prenom = new JTextField();
         panel.add(new JLabel("Prénom:"));
         panel.add(prenom);
-    
+
         JButton licencierButton = new JButton("Licencier");
         panel.add(new JLabel()); // Espace vide pour l'esthétique
         panel.add(licencierButton);
-    
+
         frame.getContentPane().add(panel);
         frame.setSize(500, 350);
         frame.setVisible(true);
-    
+
         // Ajouter un écouteur d'événements sur le bouton Licencier
         licencierButton.addActionListener(new ActionListener() {
             @Override
@@ -352,34 +356,38 @@ public class Manager extends Employe {
                 // Récupérer les informations après que l'utilisateur a cliqué sur Licencier
                 String nomString = nom.getText();
                 String prenomString = prenom.getText();
-    
+
                 // Vérifier si les champs sont vides
                 if (nomString.isEmpty() || prenomString.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Veuillez saisir le nom et le prénom de l'employé.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Veuillez saisir le nom et le prénom de l'employé.", "Erreur",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-    
+
                 // Récupérer le fichier de l'employé
                 String fichierEmploye = "employes/" + nomString + "_" + prenomString + ".ser";
                 File employe = new File(fichierEmploye);
-    
+
                 // Si le fichier existe, on le supprime
                 if (employe.exists()) {
                     if (employe.delete()) {
-                        JOptionPane.showMessageDialog(frame, "L'employé a été licencié.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(frame, "L'employé a été licencié.", "Succès",
+                                JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(frame, "Erreur lors de la suppression du fichier : " + fichierEmploye, "Erreur", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frame,
+                                "Erreur lors de la suppression du fichier : " + fichierEmploye, "Erreur",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Cet employé n'existe pas.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cet employé n'existe pas.", "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
-    
+
                 // Fermer la fenêtre après avoir licencié l'employé
                 frame.dispose();
             }
         });
     }
-    
 
     public static ArrayList<Employe> getEmployesDisponibles() {
 
@@ -473,92 +481,348 @@ public class Manager extends Employe {
      * @param poste le nom du poste de l'équipe qu'on veut former
      * @return une équipe d'employés
      */
-    public ArrayList<Employe> formerEquipe(String poste) {
-        System.out.println("Interface de sélection des " + poste + "s :");
-        System.out.println(
-                "Rappel : il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
+    public static void formerEquipe() {
+
+        // System.out.println("Rappel : il vous faut au moins 4 cuisiniers, 2 serveurs
+        // et 1 barman afin d'ouvrir le restaurant.");
 
         ArrayList<Employe> equipe = new ArrayList<>();
         ArrayList<Employe> employesDispos = getEmployesDisponibles();
         String operation;
-        try (Scanner sc = new Scanner(System.in)) {
-            do {
-                System.out.println("Vous avez actuellement sélectionné " + equipe.size() + " " + poste + "s.");
-                System.out.println("1. Afficher tous les employés");
-                System.out.println("2. Sélectionner un employé");
-                System.out.println("3. pour quitter");
-                System.out.print("> ");
-                operation = sc.nextLine();
 
-                switch (operation) {
-                    case "1":
-                        displayEmployesDisponibles();
-                        break;
-                    case "2":
-                        System.out.print("Nom : ");
-                        String nom = sc.nextLine();
-                        System.out.print("Prénom : ");
-                        String prenom = sc.nextLine();
-                        try {
-                            // on va récupérer l'employé en question
-                            // on vérifie qu'il s'agit bien d'un cuisinier et qu'il existe
-                            Employe nouveau = selectEmploye(nom, prenom, poste, employesDispos);
+        // afficher les employés dispo sous forme de bouton et au clic, les ajouter à
+        // l'équipe
 
-                            // On vérifie qu'il n'est pas déjà sélectionné
-                            for (Employe employe : equipe) {
-                                if (employe.getNom().equals(nouveau.getNom()) &&
-                                        employe.getPrenom().equals(nouveau.getPrenom())) {
-                                    throw new ErrorHandler(poste + " déjà sélectionné.");
-                                }
-                            }
-                            equipe.add(nouveau);
-                        } catch (ErrorHandler e) {
-                            System.err.println(e.getMessage());
-                        }
-                        break;
-                    case "3":
-                        break;
-                    default:
-                        System.err.println("Opération non supportée.");
-                        break;
+        JFrame frame = new JFrame("Employés disponibles");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(employesDispos.size() + 3, 1));
+
+        for (Employe employe : employesDispos) {
+
+            JButton button = new JButton(employe.getNom() + " " + employe.getPrenom() + " - " + employe.getPoste());
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
+            button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Réagir au clic sur l'employé
+                    System.out.println("Vous avez choisi l'employé : " + employe.getNom() + " " + employe.getPrenom()
+                            + " - " + employe.getPoste());
+
+                    // Ajouter l'employé à l'équipe
+                    equipe.add(employe);
+
+                    // Supprimer l'employé des employés disponibles
+                    employesDispos.remove(employe);
+
+                    // Supprimer le bouton de l'employé
+                    panel.remove(button);
+                    panel.revalidate();
+                    panel.repaint();
+
                 }
-            } while (!operation.equals("3"));
+            });
+            panel.add(button);
         }
 
-        return null;
+        // bouton de séparation
+        JButton button = new JButton(" ");
+        button.setEnabled(false);
+        panel.add(button);
+
+        JButton voirEquipeButton = new JButton("Voir l'équipe");
+        voirEquipeButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        voirEquipeButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        voirEquipeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur le bouton Voir l'équipe
+                JFrame frame = new JFrame("Equipe");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(equipe.size() + 1, 1));
+
+                for (Employe employe : equipe) {
+                    JLabel label = new JLabel(
+                            employe.getNom() + " " + employe.getPrenom() + " - " + employe.getPoste());
+                    label.setFont(new Font("Arial", Font.PLAIN, 14));
+                    label.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+                    panel.add(label);
+                }
+
+                JButton validerButton = new JButton("Fermer");
+                validerButton.setFont(new Font("Arial", Font.PLAIN, 14));
+                validerButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+                validerButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        // Fermer la fenêtre
+                        frame.dispose();
+                    }
+                });
+
+                panel.add(validerButton);
+
+                frame.getContentPane().add(panel);
+                frame.setSize(500, 350);
+                frame.setVisible(true);
+
+            }
+        });
+
+        panel.add(voirEquipeButton);
+
+        JButton validerButton = new JButton("Valider");
+        validerButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        validerButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        validerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                if (!verifEquipe(equipe)) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.",
+                            "Erreur",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                System.out.println("Vous avez choisi de valider l'équipe :");
+                for (Employe employe : equipe) {
+                    System.out.println(employe.getNom() + " " + employe.getPrenom() + " - " + employe.getPoste());
+                }
+
+                // Fermer la fenêtre
+                frame.dispose();
+            }
+        });
+
+        panel.add(validerButton);
+
+        frame.getContentPane().add(panel);
+        frame.setSize(500, 350);
+        frame.setVisible(true);
+
     }
 
-    @Override
-    public void interfaceEmploye() {
-        System.out.println("Vous êtes sur l'écran de gestion des employés : ");
-        try (Scanner scanner = new Scanner(System.in)) {
-            String operation;
+    public static boolean verifEquipe(ArrayList<Employe> equipe) {
+        // vérifier qu'il y a au moins 4 cuisiniers, 2 serveurs et 1 barman
+        int nbCuisiniers = 0;
+        int nbServeurs = 0;
+        int nbBarmans = 0;
 
-            do {
-                System.out.println("1. Afficher tous les employés");
-                System.out.println("2. Embaucher");
-                System.out.println("3. Licencier");
-                System.out.println("4. Retour");
-                System.out.print("> ");
-                operation = scanner.nextLine();
-
-                switch (operation) {
-                    case "1":
-                        displayEmployesDisponibles();
-                        break;
-                    case "2":
-                        embaucher();
-                        break;
-                    case "3":
-                        licencier();
-                        break;
-                    case "4":
-                        break;
-                    default:
-                        System.err.println("Opération non supportée.");
-                        break;
-                }
-            } while (!operation.equals("4"));
+        for (Employe employe : equipe) {
+            if (employe.getPoste().equals("cuisinier")) {
+                nbCuisiniers++;
+            } else if (employe.getPoste().equals("serveur")) {
+                nbServeurs++;
+            } else if (employe.getPoste().equals("barman")) {
+                nbBarmans++;
+            }
         }
+        if (nbCuisiniers < 4 || nbServeurs < 2 || nbBarmans < 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void resultatTotal() {
+        JFrame frame = new JFrame("Résultat de la journée");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 1));
+
+        // On crée un tableau
+        String[] columnNames = { "Commande", "Prix" };
+        Object[][] data;
+        int totalDay = 0;
+
+        // On récupère les commandes du jour
+        File dossierCommandes = new File("facture/additionClient/");
+        File[] fichiersCommandes = dossierCommandes.listFiles();
+        if (fichiersCommandes != null) {
+            data = new Object[fichiersCommandes.length][2];
+            for (int i = 0; i < fichiersCommandes.length; i++) {
+                File commande = fichiersCommandes[i];
+
+                // On récupère le nom de la commande
+                String commandeName = commande.getName();
+                data[i][0] = commandeName;
+
+                // On récupère le prix de la commande
+                int total = getTotalFromCommande(commande);
+                data[i][1] = total;
+                totalDay += total;
+            }
+
+            // On crée un modèle de tableau
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+            // on mets en entete le total de la journée
+            model.setColumnIdentifiers(new String[] { "Commande", "Prix (Total : " + totalDay + ")" });
+
+            // On crée un tableau avec le modèle
+            JTable table = new JTable(model);
+
+            // On ajoute le tableau au panneau
+            panel.add(new JScrollPane(table));
+        } else {
+            data = new Object[0][0];
+        }
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+    }
+
+    public static void resultatJournee() {
+        JFrame frame = new JFrame("Résultat de la journée");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 1));
+
+        // On crée un tableau
+        String[] columnNames = { "Commande", "Prix" };
+        Object[][] data;
+        int totalDay = 0;
+
+        String lastCommandDate = getLastCommandDate("facture/additionClient/");
+
+        // On récupère les commandes du jour
+        File dossierCommandes = new File("facture/additionClient/");
+        File[] fichiersCommandes = dossierCommandes.listFiles();
+        if (fichiersCommandes != null) {
+            data = new Object[fichiersCommandes.length][2];
+            for (int i = 0; i < fichiersCommandes.length; i++) {
+                File commande = fichiersCommandes[i];
+
+                // On récupère le nom de la commande
+                String commandeName = commande.getName();
+
+                // On extrait la date du nom de la commande
+                String commandeDate = extractDateFromCommandeName(commandeName);
+
+                // Comparez la date avec la date de la dernière commande
+                if (commandeDate.equals(lastCommandDate)) {
+                    data[i][0] = commandeName;
+
+                    // On récupère le prix de la commande
+                    int total = getTotalFromCommande(commande);
+                    data[i][1] = total;
+                    totalDay += total;
+                }
+            }
+
+            // mettre a jour la taille de data
+            int nbCommandes = 0;
+            for (int i = 0; i < data.length; i++) {
+                if (data[i][0] != null) {
+                    nbCommandes++;
+                }
+            }
+            Object[][] data2 = new Object[nbCommandes][2];
+
+            int index = 0;
+            for (int i = 0; i < data.length; i++) {
+                if (data[i][0] != null) {
+                    data2[index][0] = data[i][0];
+                    data2[index][1] = data[i][1];
+                    index++;
+                }
+            }
+
+            // On crée un modèle de tableau
+            DefaultTableModel model = new DefaultTableModel(data2, columnNames);
+
+            // on mets en entete le total de la journée
+            model.setColumnIdentifiers(new String[] { "Commande", "Prix (Total : " + totalDay + ")" });
+
+            // On crée un tableau avec le modèle
+            JTable table = new JTable(model);
+
+            // On ajoute le tableau au panneau
+            panel.add(new JScrollPane(table));
+        } else {
+            data = new Object[0][0];
+        }
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+    }
+
+    private static String getLastCommandDate(String string) {
+        // récupérer le nom du dernier fichier du dossier facture/additionClient
+        File dossierCommandes = new File(string);
+        File[] fichiersCommandes = dossierCommandes.listFiles();
+
+        if (fichiersCommandes != null) {
+            File lastCommande = fichiersCommandes[fichiersCommandes.length - 1];
+            String lastCommandeName = lastCommande.getName();
+
+            // extraire la date du nom du fichier
+            return extractDateFromCommandeName(lastCommandeName);
+        } else {
+            return "";
+        }
+    }
+
+    private static int getTotalFromCommande(File commande) {
+        int total = 0;
+        try (BufferedReader lecteur = new BufferedReader(new FileReader(commande))) {
+            String ligne;
+            boolean sectionTotal = false;
+
+            while ((ligne = lecteur.readLine()) != null) {
+                // System.out.println("Ligne du fichier : [" + ligne + "] - Longueur : " +
+                // ligne.length());
+
+                Pattern pattern = Pattern.compile("Total:\\s*(\\d+)");
+                Matcher matcher = pattern.matcher(ligne.trim());
+
+                if (matcher.matches()) {
+                    String totalStr = matcher.group(1);
+                    try {
+                        total = Integer.parseInt(totalStr);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Erreur de conversion en entier : " + e.getMessage());
+                    }
+                    sectionTotal = true;
+                    break;
+                }
+
+                if (sectionTotal) {
+                    try {
+                        total = Integer.parseInt(ligne.trim().substring("Total:".length()));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Erreur de conversion en entier : " + e.getMessage());
+                    }
+                    break; // La section Total est terminée, sortir de la boucle
+                }
+            }
+
+        } catch (IOException e) {
+            System.err.println("Impossible de lire : " + e);
+        }
+        return total;
+    }
+
+    // Méthode pour extraire la date du nom de la commande
+    private static String extractDateFromCommandeName(String commandeName) {
+        // Votre logique d'extraction de date ici
+        // Par exemple, si le format est toujours le même, vous pouvez utiliser
+        // substring
+        return commandeName.substring(18, 26); // Assurez-vous d'ajuster les indices selon votre format réel
     }
 }
