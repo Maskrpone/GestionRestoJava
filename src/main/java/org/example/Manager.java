@@ -1,37 +1,58 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Hippolyte & Thibaut
  * @class Manager est une classe fille de Employe
  * @method embaucher() permet d'embaucher un employé
  * @method licencier() permet de licencier un employé
- * @method displayEmployesDisponibles() permet d'afficher les employés disponibles
- * @method ingredientsACommanderRapide() permet de commander rapidement des ingrédients
+ * @method displayEmployesDisponibles() permet d'afficher les employés
+ *         disponibles
+ * @method ingredientsACommanderRapide() permet de commander rapidement des
+ *         ingrédients
  * @method consulterStock() permet de consulter le stock
- * @method consulterStockPriceToPay() permet de consulter le stock et d'avoir le prix de l'augmentation du stock
+ * @method consulterStockPriceToPay() permet de consulter le stock et d'avoir le
+ *         prix de l'augmentation du stock
  * @method finJournee() permet de finir la journée
  * @method selectTeam() permet de sélectionner une équipe
  * @method setStock() permet de modifier le stock
- * @see Employe est une classe mère des différents employés du restaurant, occupant des postes différents
+ * @see Employe est une classe mère des différents employés du restaurant,
+ *      occupant des postes différents
  */
 public class Manager extends Employe {
     private HashMap<String, ArrayList<Employe>> employes;
     private ArrayList<Commande> historique_commandes;
 
-    //region Constructor
+    // region Constructor
     public Manager(String nom, String prenom, int salaire, String poste) {
         super(nom, prenom, salaire, poste);
         this.employes = new HashMap<>();
     }
-    //endregion
+    // endregion
 
-    //region Getter
+    // region Getter
     public HashMap<String, ArrayList<Employe>> getEmployes() {
         return employes;
     }
@@ -39,9 +60,9 @@ public class Manager extends Employe {
     public ArrayList<Commande> getHistorique_commandes() {
         return historique_commandes;
     }
-    //endregion
+    // endregion
 
-    //region Setter
+    // region Setter
 
     public void setEmployes(HashMap<String, ArrayList<Employe>> employes) {
         this.employes = employes;
@@ -50,7 +71,8 @@ public class Manager extends Employe {
     /**
      * Permet de sélectionner une équipe
      *
-     * @return le hashmap d'une équipe qu'on chargera dans l'attribut employé du resto
+     * @return le hashmap d'une équipe qu'on chargera dans l'attribut employé du
+     *         resto
      */
     public HashMap<String, Employe> selectTeam() {
         return null;
@@ -64,9 +86,9 @@ public class Manager extends Employe {
         this.historique_commandes = historique_commandes;
     }
 
-    //endregion
+    // endregion
 
-    //region MethodesStock
+    // region MethodesStock
     public void finJournee() {
     }
 
@@ -94,72 +116,58 @@ public class Manager extends Employe {
     }
 
     /**
-     * @param stock Le stock à consulter
      * @return La map d'ingrédient commandé avec la quantité
      * @author Thibaut
      */
-    public Map<Ingredients, Integer> consulterStock(Stock stock) {
+    public static Map<Ingredients, Integer> consulterStock() {
+        Stock stock = new Stock();
         ArrayList<Ingredients> currentStock = stock.getStock();
         Map<Ingredients, Integer> quantitiesAdded = new HashMap<>();
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                int index = 1;
-                System.out.println("Stock actuel :");
 
-                for (Ingredients ingredient : currentStock) {
-                    int quantite = ingredient.getNb();
-                    System.out.println(index + ". " + ingredient.getNom() + ": " + quantite);
-                    index++;
-                }
+        // On affiche le stock actuel dans une JFrame
+        JFrame frame = new JFrame("Stock actuel");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                System.out.print("Sélectionnez le numéro de l'ingrédient à augmenter (0 pour quitter) : ");
-                int selectedNumber = scanner.nextInt();
+        // On crée un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 1));
 
-
-                if (selectedNumber == 0) {
-                    break; // Quitte la boucle si 0 est sélectionné
-                } else if (selectedNumber > 0 && selectedNumber <= currentStock.size()) {
-                    Ingredients selectedIngredient = null;
-                    int currentIndex = 1;
-
-                    for (Ingredients ingredient : currentStock) {
-                        if (currentIndex == selectedNumber) {
-                            selectedIngredient = ingredient;
-                            break;
-                        }
-                        currentIndex++;
-                    }
-
-                    assert selectedIngredient != null;
-                    System.out.print("Entrez la quantité à ajouter pour " + selectedIngredient.getNom() + " : ");
-                    int quantityToAdd = scanner.nextInt();
-
-                    if (quantityToAdd > 0) {
-                        selectedIngredient.addNb(quantityToAdd);
-                        quantitiesAdded.put(selectedIngredient, quantityToAdd);
-                        System.out.println("Stock mis à jour.");
-                    } else {
-                        System.out.println("La quantité doit être supérieure à 0. Aucune modification effectuée.");
-                    }
-                } else {
-                    System.out.println("Numéro invalide. Aucune modification effectuée.");
-                }
-            }
+        // On crée un tableau
+        String[] columnNames = { "Nom", "Quantité" };
+        String[][] data = new String[currentStock.size()][2];
+        int index = 0;
+        for (Ingredients ingredient : currentStock) {
+            data[index][0] = ingredient.getNom();
+            data[index][1] = Integer.toString(ingredient.getNb());
+            index++;
         }
+        JTable tableau = new JTable(data, columnNames);
+        tableau.setFont(new Font("Serif", Font.PLAIN, 20));
+        JScrollPane scrollPane = new JScrollPane(tableau);
+        panel.add(scrollPane);
+
+        // On ajoute le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // On définit la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // On rend la fenêtre visible
+        frame.setVisible(true);
 
         return quantitiesAdded;
     }
 
     /**
-     * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une map
+     * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une
+     * map
      *
-     * @param stock Le stock à consulter
      * @return Le prix de l'augmentation stock
      * @author Thibaut
      */
-    public int consulterStockPriceToPay(Stock stock) {
+    public int consulterStockPriceToPay() {
         Map<Ingredients, Integer> ingredientAchetes;
-        ingredientAchetes = consulterStock(stock);
+        ingredientAchetes = consulterStock();
         int priceToPay = 0;
 
         for (Map.Entry<Ingredients, Integer> entry : ingredientAchetes.entrySet()) {
@@ -170,70 +178,210 @@ public class Manager extends Employe {
         return priceToPay;
     }
 
-    //endregion
+    public static Map<Boisson, Integer> consulterStockBoisson() {
+        Stock stock = new Stock();
+        ArrayList<Boisson> currentStock = stock.getStockBoisson();
+        Map<Boisson, Integer> quantitiesAdded = new HashMap<>();
 
-    //region MethodesEmployes
+        // On affiche le stock actuel dans une JFrame
+        JFrame frame = new JFrame("Stock actuel");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-    /**
-     * Permet de créer un employé et de l'ajouter à la liste des employés disponibles
-     *
-     * @author Hippolyte
-     */
-    public void embaucher() {
-        System.out.println("Créez le profil de l'employé :");
-        try (Scanner scanner = new Scanner(System.in)) {
-            // on récupère le nom, prénom, salaire et poste de l'employé
-            System.out.print("Nom : ");
-            String nom = scanner.nextLine();
-            System.out.print("Prénom : ");
-            String prenom = scanner.nextLine();
-            System.out.print("Salaire : ");
-            int salaire = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Poste : ");
-            String poste = scanner.nextLine();
-            Employe employe = new Employe(nom, prenom, salaire, poste);
+        // On crée un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 1));
 
-            // on écrit le profil employé dans le répertoire "employes/"
-            employe.ecrireEmploye();
+        // On crée un tableau
+        String[] columnNames = { "Nom", "Quantité" };
+        String[][] data = new String[currentStock.size()][2];
+        int index = 0;
+        for (Boisson boisson : currentStock) {
+            data[index][0] = boisson.getName();
+            data[index][1] = Integer.toString(boisson.getNb());
+            index++;
         }
+        JTable tableau = new JTable(data, columnNames);
+        tableau.setFont(new Font("Serif", Font.PLAIN, 20));
+        JScrollPane scrollPane = new JScrollPane(tableau);
+        panel.add(scrollPane);
 
-        System.out.println("Profil employé créé, il a été ajouté aux employés disponibles.");
+        // On ajoute le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // On définit la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // On rend la fenêtre visible
+        frame.setVisible(true);
+
+        return quantitiesAdded;
     }
 
+    // endregion
+
+    // region MethodesEmployes
+
     /**
-     * Permet de licencier un employé et de supprimer son profil du répertoire "employes/" s'il existe
-     *
-     * @author Hippolyte
+     * Permet de récupérer les employes à partir d'un fichier json contenant des
+     * employes par défaut afin d'initialiser les fichiers serialies plus facilement
      */
-    public void licencier() {
-        System.out.println("Vous êtes sur l'écran de licenciement : ");
-        try (Scanner scanner = new Scanner(System.in)) {
-            // on récupère le nom et prénom de l'employé à licencier
-            System.out.print("Nom : ");
-            String nom = scanner.nextLine();
-            System.out.print("Prénom : ");
-            String prenom = scanner.nextLine();
+    public void jsonEmployesToSerialize() {
+        try {
+            // Lire le fichier JSON en tant que chaîne
+            String employeJson = new String(Files.readAllBytes(Paths.get("employe.json")));
 
-            // On récupère le fichier de l'employé
-            final String fichier_employe = "employes/" + nom + "_" + prenom + ".ser";
-            File employe = new File(fichier_employe);
+            // Créer un objet JSON à partir de la chaîne
+            JSONObject jsonObject = new JSONObject(employeJson);
 
-            // Si le fichier existe, on le supprime
-            if (employe.exists()) {
-                if (employe.delete()) {
-                    System.out.println("L'employé a été licencié.");
-                } else {
-                    System.err.println("Erreur lors de la suppression du fichier : " + fichier_employe);
-                }
-            } else {
-                System.out.println("Cet employé n'existe pas.");
+            // Obtenir le tableau d'employés à partir de la clé "employes"
+            JSONArray employesArray = jsonObject.getJSONArray("employe");
+
+            // Parcourir les objets du tableau
+            for (int i = 0; i < employesArray.length(); i++) {
+                JSONObject employeData = employesArray.getJSONObject(i);
+                String nom = employeData.getString("nom");
+                String prenom = employeData.getString("prenom");
+                int salaire = employeData.getInt("salaire");
+                int joursTravailles = employeData.getInt("jours_travailles");
+                String poste = employeData.getString("poste");
+
+                Employe employe = new Employe(nom, prenom, salaire, joursTravailles, poste);
+
+                employe.ecrireEmploye();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
 
-    public ArrayList<Employe> getEmployesDisponibles() {
+    /**
+     * Permet de créer un employé et de l'ajouter à la liste des employés
+     * disponibles
+     *
+     * @author Hippolyte
+     */
+    public static void embaucher() {
+        JFrame frame = new JFrame("Création d'un employé");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 2));
+
+        JTextField nom = new JTextField();
+        panel.add(new JLabel("Nom:"));
+        panel.add(nom);
+
+        JTextField prenom = new JTextField();
+        panel.add(new JLabel("Prénom:"));
+        panel.add(prenom);
+
+        JTextField salaire = new JTextField();
+        panel.add(new JLabel("Salaire:"));
+        panel.add(salaire);
+
+        JTextField poste = new JTextField();
+        panel.add(new JLabel("Poste:"));
+        panel.add(poste);
+
+        JButton validerButton = new JButton("Valider");
+        panel.add(validerButton);
+
+        frame.getContentPane().add(panel);
+        frame.setSize(500, 350);
+        frame.setVisible(true);
+
+        // Ajouter un écouteur d'événements sur le bouton Valider
+        validerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Récupérer les informations après que l'utilisateur a cliqué sur Valider
+                String nomString = nom.getText();
+                String prenomString = prenom.getText();
+
+                try {
+                    int salaireInt = Integer.parseInt(salaire.getText());
+                    String posteString = poste.getText();
+
+                    Employe employe = new Employe(nomString, prenomString, salaireInt, posteString);
+                    employe.ecrireEmploye();
+
+                    // Fermer la fenêtre après avoir ajouté l'employé
+                    frame.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Le salaire doit être un nombre entier.", "Erreur",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    /**
+     * Permet de licencier un employé et de supprimer son profil du répertoire
+     * "employes/" s'il existe
+     *
+     * @author Hippolyte
+     */
+    public static void licencier() {
+        JFrame frame = new JFrame("Licencier un employé");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 2));
+    
+        JTextField nom = new JTextField();
+        panel.add(new JLabel("Nom:"));
+        panel.add(nom);
+    
+        JTextField prenom = new JTextField();
+        panel.add(new JLabel("Prénom:"));
+        panel.add(prenom);
+    
+        JButton licencierButton = new JButton("Licencier");
+        panel.add(new JLabel()); // Espace vide pour l'esthétique
+        panel.add(licencierButton);
+    
+        frame.getContentPane().add(panel);
+        frame.setSize(500, 350);
+        frame.setVisible(true);
+    
+        // Ajouter un écouteur d'événements sur le bouton Licencier
+        licencierButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Récupérer les informations après que l'utilisateur a cliqué sur Licencier
+                String nomString = nom.getText();
+                String prenomString = prenom.getText();
+    
+                // Vérifier si les champs sont vides
+                if (nomString.isEmpty() || prenomString.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Veuillez saisir le nom et le prénom de l'employé.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+    
+                // Récupérer le fichier de l'employé
+                String fichierEmploye = "employes/" + nomString + "_" + prenomString + ".ser";
+                File employe = new File(fichierEmploye);
+    
+                // Si le fichier existe, on le supprime
+                if (employe.exists()) {
+                    if (employe.delete()) {
+                        JOptionPane.showMessageDialog(frame, "L'employé a été licencié.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Erreur lors de la suppression du fichier : " + fichierEmploye, "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Cet employé n'existe pas.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+    
+                // Fermer la fenêtre après avoir licencié l'employé
+                frame.dispose();
+            }
+        });
+    }
+    
+
+    public static ArrayList<Employe> getEmployesDisponibles() {
 
         // on récupère les fichiers contenant les différents employés
         // (un fichier par employé)
@@ -270,14 +418,36 @@ public class Manager extends Employe {
      *
      * @author Hippolyte
      */
-    public void displayEmployesDisponibles() {
+    public static void displayEmployesDisponibles() {
         ArrayList<Employe> employes = getEmployesDisponibles();
         // affichage de chaque employé disponible
         if (!employes.isEmpty()) {
-            System.out.println("Employés disponibles :");
+
+            JFrame frame = new JFrame("Employés disponibles");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(1, 1));
+
+            String[] columnNames = { "Nom", "Prénom", "Salaire", "Poste" };
+            String[][] data = new String[employes.size()][4];
+            int index = 0;
             for (Employe employe : employes) {
-                employe.afficherConcis();
+                data[index][0] = employe.getNom();
+                data[index][1] = employe.getPrenom();
+                data[index][2] = Integer.toString(employe.getSalaire());
+                data[index][3] = employe.getPoste();
+                index++;
             }
+            JTable tableau = new JTable(data, columnNames);
+            tableau.setFont(new Font("Serif", Font.PLAIN, 20));
+            JScrollPane scrollPane = new JScrollPane(tableau);
+            panel.add(scrollPane);
+
+            frame.getContentPane().add(panel);
+            frame.setSize(500, 350);
+            frame.setVisible(true);
+
         } else {
             System.out.println("Aucun employé disponible.");
         }
@@ -297,13 +467,16 @@ public class Manager extends Employe {
     /**
      * Renvoie une équipe d'employés en fonction du poste
      * (cuisinier, serveur ou barman)
-     * La liste d employés renvoyée est ensuite convertie pour devenir la classe que l'on souhaite
+     * La liste d employés renvoyée est ensuite convertie pour devenir la classe que
+     * l'on souhaite
+     * 
      * @param poste le nom du poste de l'équipe qu'on veut former
      * @return une équipe d'employés
      */
     public ArrayList<Employe> formerEquipe(String poste) {
         System.out.println("Interface de sélection des " + poste + "s :");
-        System.out.println("Rappel : il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
+        System.out.println(
+                "Rappel : il vous faut au moins 4 cuisiniers, 2 serveurs et 1 barman afin d'ouvrir le restaurant.");
 
         ArrayList<Employe> equipe = new ArrayList<>();
         ArrayList<Employe> employesDispos = getEmployesDisponibles();

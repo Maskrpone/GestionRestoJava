@@ -1,0 +1,14 @@
+Commande table n° 12 - 2023-12-10 00:03:59
+
+Boisson:
+	biere - 5
+	eau - 0
+
+Plat:
+	pizza-fromage - 12
+	burger - 15
+	pizza-fromage-champignon - 12
+	burger-viande - 15
+	pizza-fromage-champignon - 12
+
+Total: 71

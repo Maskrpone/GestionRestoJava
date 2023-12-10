@@ -52,17 +52,17 @@ public class Restaurant {
     public void interfaceAccueil() {
         System.out.println("Menu d'accueil : ");
         String operation;
-        Scanner sc = new Scanner(System.in);
+        try (Scanner sc = new Scanner(System.in)) {
+            do {
+                System.out.println("Que voulez-vous faire ?");
+                System.out.println("1. Se connecter en tant que manager");
+                System.out.println("2. Se connecter en tant qu'employé");
+                System.out.println("0. Mettre fin au programme");
+                System.out.print("> ");
+                operation = sc.nextLine();
 
-        do {
-            System.out.println("Que voulez-vous faire ?");
-            System.out.println("1. Se connecter en tant que manager");
-            System.out.println("2. Se connecter en tant qu'employé");
-            System.out.println("0. Mettre fin au programme");
-            System.out.print("> ");
-            operation = sc.nextLine();
-
-        } while (!operation.equals("0"));
+            } while (!operation.equals("0"));
+        }
     }
     // endregion interface
 

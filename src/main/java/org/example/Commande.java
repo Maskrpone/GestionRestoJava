@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -78,7 +77,7 @@ public class Commande implements Serializable {
     public void afficherCommande() {
         // Créer une fenêtre
         JFrame frame = new JFrame("La commande");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Afficher la commande
         JPanel panel = new JPanel();
@@ -150,7 +149,7 @@ public class Commande implements Serializable {
     protected void afficherFacture() {
         // Créer une fenêtre
         JFrame frame = new JFrame("La facture");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Afficher la facture
         JPanel panel = new JPanel();
@@ -206,7 +205,7 @@ public class Commande implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 // nouvelle fenetre pour payer
                 JFrame frame = new JFrame("Payer");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                 // Créer un panneau
                 JPanel panel = new JPanel();
@@ -297,7 +296,7 @@ public class Commande implements Serializable {
     private void merci() {
         // Afficher le message de remerciement
         JFrame frame = new JFrame("Merci !");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Créer un panneau
         JPanel panel = new JPanel();

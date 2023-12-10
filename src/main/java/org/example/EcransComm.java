@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -62,7 +61,7 @@ public class EcransComm {
         fenetre.setTitle("Commandes");
         fenetre.setSize(500, 500);
         fenetre.setLocationRelativeTo(null);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
@@ -90,7 +89,6 @@ public class EcransComm {
         fenetre.setContentPane(panel);
         fenetre.setVisible(true);
     }
-
 
     public static void affichageCommandeCuisine() {
 
@@ -134,7 +132,7 @@ public class EcransComm {
         fenetre.setTitle("Commandes");
         fenetre.setSize(500, 500);
         fenetre.setLocationRelativeTo(null);
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
@@ -163,4 +161,140 @@ public class EcransComm {
         fenetre.setVisible(true);
     }
 
+    public static void affichageAdmin() {
+        // Créer une fenêtre
+        JFrame frame = new JFrame("ADMINISTRATION");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Créer un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 1));
+
+        // Ajouter des boutons pour chaque écrans
+        JButton button = new JButton("Gestions des employés");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi la gestion des employés");
+                affichageAdminEmployes();
+            }
+        });
+        panel.add(button);
+
+        button = new JButton("Gestion des stocks");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi la gestion des stocks");
+                affichageStock();
+            }
+        });
+        panel.add(button);
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+
+    }
+
+        public static void affichageAdminEmployes() {
+        // Créer une fenêtre
+        JFrame frame = new JFrame("ADMINISTRATION");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Créer un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1));
+
+
+        JButton button = new JButton("Liste des employés");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi la liste des employés");
+                Manager.displayEmployesDisponibles();
+            }
+        });
+        panel.add(button);
+
+        button = new JButton("Embaucher un employé");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi l'embauche d'un employé");
+                Manager.embaucher();
+            }
+        });
+        panel.add(button);
+
+        button = new JButton("Licencier un employé");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi le licenciement d'un employé");
+                Manager.licencier();
+            }
+        });
+        panel.add(button);
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+
+    }
+
+    public static void affichageStock(){
+        // Créer une fenêtre
+        JFrame frame = new JFrame("Admin Stock");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Créer un panneau
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 1));
+
+        // Ajouter des boutons pour chaque écrans
+        JButton button = new JButton("Stock Ingrédients");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi les ingrédients");
+                Manager.consulterStock();
+            }
+        });
+        panel.add(button);
+
+        button = new JButton("Stock Boissons");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Réagir au clic sur la boisson
+                System.out.println("Vous avez choisi les boissons");
+                Manager.consulterStockBoisson();
+            }
+        });
+        panel.add(button);
+
+        // Ajouter le panneau à la fenêtre
+        frame.getContentPane().add(panel);
+
+        // Définir la taille de la fenêtre
+        frame.setSize(500, 350);
+
+        // Rendre la fenêtre visible
+        frame.setVisible(true);
+
+    }
+
+    public static void affichageManager() {
+
+    }
 }

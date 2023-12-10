@@ -1,0 +1,9 @@
+Commande table n° 12 - 2023-12-10 11:47:33
+
+Boisson:
+	limonade - 4
+
+Plat:
+	potage-oignon - 8
+
+Total: 12

@@ -120,7 +120,7 @@ public class Menu {
 
         // Créer une fenêtre
         JFrame frame = new JFrame("Le Menu !");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Créer un panneau
         JPanel panel = new JPanel();
