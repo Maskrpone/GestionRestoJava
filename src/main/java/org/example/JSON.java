@@ -14,6 +14,11 @@ import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Files.write;
 
 public class JSON {
+    /**
+     * Ecrit un fichier json
+     * @param filename Nom du fichier
+     * @param content contenu à écrire
+     */
     public void writeFile(String filename, String content) {
         try {
             Path path = Paths.get(filename);
@@ -23,6 +28,11 @@ public class JSON {
         }
     }
 
+    /**
+     * Récupère le contenu d'un fichier JSON
+     * @param filename Nom du fichier souhaité
+     * @return Contenu du fichier en string
+     */
     public String getFile(String filename) {
         try {
             Path path = Paths.get(filename);
@@ -52,6 +62,12 @@ public class JSON {
             System.err.println("Caught IOException: " + e.getMessage());
         }
     }
+
+    /**
+     * Ecrit les stocks dans un fichier JSON
+     * @param ingredientsMap contenu à écrire
+     * @param fileName nom du fichier
+     */
     public void writeFullStock(Map<Ingredients, Integer> ingredientsMap, String fileName) {
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             JSONArray jsonArray = new JSONArray();
@@ -77,7 +93,10 @@ public class JSON {
         }
     }
 
-    // Fonction pour convertir un JSONArray en ArrayList<String>
+    /**
+     * Fonction pour convertir un JSONArray en ArrayList<String>
+     * @param jsonArray Contenu à convertir
+     */
     public ArrayList<String> jsonArrayToList(JSONArray jsonArray) {
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {

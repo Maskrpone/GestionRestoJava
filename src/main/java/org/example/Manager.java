@@ -28,7 +28,6 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 
 /**
- * @author Hippolyte & Thibaut
  * @class Manager est une classe fille de Employe
  * @method embaucher() permet d'embaucher un employé
  * @method licencier() permet de licencier un employé
@@ -101,7 +100,6 @@ public class Manager extends Employe {
      * @param stockFull Valeur de stock full
      * @param stock     Le stock à controler
      * @return Le prix total à payer
-     * @author Thibaut
      */
     public int ingredientsACommanderRapide(int stockLow, int stockFull, Stock stock) {
         Map<Ingredients, Integer> ingredientsACommander = new HashMap<>();
@@ -120,8 +118,8 @@ public class Manager extends Employe {
     }
 
     /**
+     * Permet au manger de consulter les stocks des ingrédients et de les augmenter
      * @return La map d'ingrédient commandé avec la quantité
-     * @author Thibaut
      */
     public static Map<Ingredients, Integer> consulterStock() {
         Stock stock = new Stock();
@@ -165,9 +163,7 @@ public class Manager extends Employe {
     /**
      * Utilise la fonction consulterStock et permet d'avoir le prix au lieu d'une
      * map
-     *
      * @return Le prix de l'augmentation stock
-     * @author Thibaut
      */
     public int consulterStockPriceToPay() {
         Map<Ingredients, Integer> ingredientAchetes;
@@ -182,6 +178,10 @@ public class Manager extends Employe {
         return priceToPay;
     }
 
+    /**
+     * Permet au manger de consulter les stocks des boissons et de les augmenter
+     * @return La map d'ingrédient commandé avec la quantité
+     */
     public static Map<Boisson, Integer> consulterStockBoisson() {
         Stock stock = new Stock();
         ArrayList<Boisson> currentStock = stock.getStockBoisson();
@@ -262,8 +262,6 @@ public class Manager extends Employe {
     /**
      * Permet de créer un employé et de l'ajouter à la liste des employés
      * disponibles
-     *
-     * @author Hippolyte
      */
     public static void embaucher() {
         JFrame frame = new JFrame("Création d'un employé");
@@ -323,8 +321,6 @@ public class Manager extends Employe {
     /**
      * Permet de licencier un employé et de supprimer son profil du répertoire
      * "employes/" s'il existe
-     *
-     * @author Hippolyte
      */
     public static void licencier() {
         JFrame frame = new JFrame("Licencier un employé");
@@ -423,8 +419,6 @@ public class Manager extends Employe {
 
     /**
      * Permet d'afficher les différents employés disponibles
-     *
-     * @author Hippolyte
      */
     public static void displayEmployesDisponibles() {
         ArrayList<Employe> employes = getEmployesDisponibles();
@@ -477,9 +471,6 @@ public class Manager extends Employe {
      * (cuisinier, serveur ou barman)
      * La liste d employés renvoyée est ensuite convertie pour devenir la classe que
      * l'on souhaite
-     * 
-     * @param poste le nom du poste de l'équipe qu'on veut former
-     * @return une équipe d'employés
      */
     public static void formerEquipe() {
 
@@ -604,6 +595,11 @@ public class Manager extends Employe {
 
     }
 
+    /**
+     * Fonction vérifiant que l'équipe est bien composée de au moins 4 cuisiniers, 2 serveurs 1 barman
+     * @param equipe Equipe à vérifier
+     * @return Equipe valide ou non
+     */
     public static boolean verifEquipe(ArrayList<Employe> equipe) {
         // vérifier qu'il y a au moins 4 cuisiniers, 2 serveurs et 1 barman
         int nbCuisiniers = 0;
@@ -625,6 +621,9 @@ public class Manager extends Employe {
         return true;
     }
 
+    /**
+     * Affiche le résultat de la journée du restaurant
+     */
     public static void resultatTotal() {
         JFrame frame = new JFrame("Résultat de la journée");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -762,6 +761,11 @@ public class Manager extends Employe {
         frame.setVisible(true);
     }
 
+    /**
+     * Fonction qui récupère le nom du dernier fichier
+     * @param string Nom du fichier à trouver
+     * @return Nom du fichier trouvé
+     */
     private static String getLastCommandDate(String string) {
         // récupérer le nom du dernier fichier du dossier facture/additionClient
         File dossierCommandes = new File(string);
@@ -778,6 +782,11 @@ public class Manager extends Employe {
         }
     }
 
+    /**
+     * Fonction qui permet d'avoir le total du prix d'une commande
+     * @param commande commande dont on cherche le total
+     * @return Prix total de la commande
+     */
     private static int getTotalFromCommande(File commande) {
         int total = 0;
         try (BufferedReader lecteur = new BufferedReader(new FileReader(commande))) {
@@ -818,7 +827,9 @@ public class Manager extends Employe {
         return total;
     }
 
-    // Méthode pour extraire la date du nom de la commande
+    /**
+     * Méthode pour extraire la date du nom de la commande
+     */
     private static String extractDateFromCommandeName(String commandeName) {
         // Votre logique d'extraction de date ici
         // Par exemple, si le format est toujours le même, vous pouvez utiliser

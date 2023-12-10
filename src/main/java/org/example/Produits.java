@@ -44,6 +44,11 @@ public class Produits implements Serializable{
     //endregion
 
     //region Methode
+
+    /**
+     * Permey de mettre à jour ingrédients en fonction d'une liste d'ingrédients d'un repas
+     * @param jsonIngredients liste d'ingrédient à vérifier
+     */
     public void updateIngredientsList(JSONArray jsonIngredients) {
         for (int i = 0; i < jsonIngredients.length(); i++) {
             String ingredientName = jsonIngredients.getString(i);

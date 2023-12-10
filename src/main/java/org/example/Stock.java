@@ -14,7 +14,6 @@ public class Stock {
     /**
      * Constructeur de la classe stock, s'initialisant avec une désérialisation.
      * Chaque ingrédient a son fichier .ser
-     * @author Hippolyte
      * @serialData les fichiers de chaque ingrédients
      */
     public Stock() {
@@ -49,7 +48,6 @@ public class Stock {
 
     /**
      * Constructeur de la classe stock, s'initialisant avec une liste d'ingrédients passée en paramètre
-     * @author  Hippolyte
      * @param _stock la liste d'ingrédients
      */
     public Stock(ArrayList<Ingredients> _stock) {
@@ -62,7 +60,6 @@ public class Stock {
 
     /**
      * Obtenir la quantité d'un ingrédient dans le stock
-     * @author Hippolyte
      * @param ingredient le nom de l'ingrédient
      * @return Integer, la quantité de cet ingrédient encore dans le stock
      */
@@ -100,7 +97,6 @@ public class Stock {
     //region Setter
     /**
      * Cette fonction est utilisée pour retirer la quantité d'ingrédient que nous utilisons des stocks
-     * @author Hippolyte
      * @param ingredient le nom de l'ingrédient
      * @param quantity la quantité utilisée et à retirer
      */
@@ -112,6 +108,10 @@ public class Stock {
         }
     }
 
+    /**
+     * Cette fonction est utilisée pour retirer une boisson que nous utilisons des stocks
+     * @param boisson Boisson à retirer
+     */
     public void useStockBoisson(Boisson boisson) {
         for (Boisson it : this.stockBoisson){
             if(it.getName().equals(boisson.getName())){
@@ -136,6 +136,9 @@ public class Stock {
     }
     //endregion
 
+    /**
+     * Affichage des stocks
+     */
     public void displayStock() {
         System.out.println("--------------------------------------------------");
         System.out.println("|\t\t   Nom de l'ingrédient   \t\t|\t\t        Quantité        \t\t|");

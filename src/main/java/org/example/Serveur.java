@@ -18,7 +18,6 @@ public class Serveur extends Employe{
 
     /**
      * Fonction qui prend en charge les commandes
-     * @author  Hippolyte
      * @param table le numéro de la table
      * @param boissons tableau des boissons
      * @param repas tableau des repas
@@ -55,7 +54,6 @@ public class Serveur extends Employe{
 
     /**
      * Fonction qui renvoie True s'il y a suffisemment d'ingrédients dans le stock et False sinon.
-     * @author Hippolyte
      * @param prod qui est le produit dont on veut controler la disponibilité des ingrédients
      * @return Boolean
      */
@@ -71,7 +69,6 @@ public class Serveur extends Employe{
 
     /**
      * Fonction qui renvoie True si la boisson est disponible et False sinon.
-     * @author Hippolyte
      * @param boisson   la boisson dont on veut vérifier la disponibilité
      * @return  boolean
      */
@@ -110,7 +107,6 @@ public class Serveur extends Employe{
 
     /**
      * Fonction pour sérialiser la commande dans le dossier /commandes/
-     * @author   Hippolyte
      * @param commande la commande à sérialiser
      */
     public void envoi(Commande commande) {
@@ -127,13 +123,4 @@ public class Serveur extends Employe{
             System.err.println("Impossible d'écrire : " + e);
         }
     }
-
-    public boolean verifCommande(Commande commande) {
-        return true;
-    }
-
-    public void servirCommande(Commande commande) {
-    }
-
-
 }

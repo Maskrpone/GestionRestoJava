@@ -19,6 +19,9 @@ import java.net.SocketException;
 
 public class EcransComm {
 
+    /**
+     * Ecran Barman avec les commandes
+     */
     public static void affichageCommandeBar() {
 
         // Modèle de tableau pour stocker les données
@@ -90,6 +93,9 @@ public class EcransComm {
         fenetre.setVisible(true);
     }
 
+    /**
+     * Affichage écran cuisinier
+     */
     public static void affichageCommandeCuisine() {
 
         // Modèle de tableau pour stocker les données
@@ -161,6 +167,9 @@ public class EcransComm {
         fenetre.setVisible(true);
     }
 
+    /**
+     * Affichage écran administrateur gestion des stocks
+     */
     public static void affichageAdmin() {
         // Créer une fenêtre
         JFrame frame = new JFrame("ADMINISTRATION");
@@ -202,7 +211,10 @@ public class EcransComm {
 
     }
 
-        public static void affichageAdminEmployes() {
+    /**
+     * Affichage écran gestion des employés
+     */
+    public static void affichageAdminEmployes() {
         // Créer une fenêtre
         JFrame frame = new JFrame("ADMINISTRATION");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -253,6 +265,9 @@ public class EcransComm {
 
     }
 
+    /**
+     * Affichage écran stocks
+     */
     public static void affichageStock(){
         // Créer une fenêtre
         JFrame frame = new JFrame("Admin Stock");
@@ -294,6 +309,9 @@ public class EcransComm {
 
     }
 
+    /**
+     * Affichage écran Manager
+     */
     public static void affichageManager() {
         // Créer une fenêtre
         JFrame frame = new JFrame("Manager");

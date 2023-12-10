@@ -28,6 +28,11 @@ public class Cuisinier extends Preparateur{
     //endregion
 
     //region Methode
+
+    /**
+     * Cuisinier cuisine une commande
+     * @param commande Commande à cuisiner
+     */
     public void cuisinerCommande(Commande commande) {
         Thread thread = new Thread(() -> {
             System.out.println(this.getNom() + ", un de nos cuisinier, en train de préparer la commande pour la table " + commande.getTable());

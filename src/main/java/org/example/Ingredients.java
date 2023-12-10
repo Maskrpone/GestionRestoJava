@@ -51,6 +51,7 @@ public class Ingredients implements Serializable {
     }
 
     //region Methode
+
     public void addNb(int nbToAdd){
         this.setNb(this.getNb() + nbToAdd);
     }
@@ -59,7 +60,7 @@ public class Ingredients implements Serializable {
         if (nb >= quantite) {
             nb -= quantite;
         } else {
-            // Gérer le cas où la quantité demandée est supérieure à la quantité disponible
+            // cas où la quantité demandée est supérieure à la quantité disponible
             System.out.println("Erreur : Quantité insuffisante d'ingrédient " + nom);
         }
     }

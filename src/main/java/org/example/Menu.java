@@ -25,6 +25,10 @@ public class Menu {
 
     // region Constructor
 
+    /**
+     * Constructeur récupérant le munu à partir des fichiers JSON boissons.json et repas.json
+     * @throws IOException Execption si fichier non ouvrable
+     */
     public Menu() throws IOException {
         JSON j = new JSON();
         String jsonMenu = j.getFile("repas.json");
@@ -85,6 +89,9 @@ public class Menu {
 
     // region Methode
 
+    /**
+     * Affiche le menu
+     */
     public void afficherMenu() {
 
         Menu menu = this;

@@ -74,6 +74,9 @@ public class Commande implements Serializable {
         this.repas.add(repas);
     }
 
+    /**
+     * Affichage de la commande
+     */
     public void afficherCommande() {
         // Créer une fenêtre
         JFrame frame = new JFrame("La commande");
@@ -146,6 +149,9 @@ public class Commande implements Serializable {
         panel.add(buttonCommande);
     }
 
+    /**
+     * Affichage de la facture et payer
+     */
     protected void afficherFacture() {
         // Créer une fenêtre
         JFrame frame = new JFrame("La facture");
@@ -282,6 +288,10 @@ public class Commande implements Serializable {
 
     }
 
+    /**
+     * Fonction qui calcule le prix total de la commande
+     * @return prix total de la commande
+     */
     String getPrixTotal() {
         int prixTotal = 0;
         for (Boisson boisson : boissons) {
@@ -293,6 +303,9 @@ public class Commande implements Serializable {
         return String.valueOf(prixTotal);
     }
 
+    /**
+     * Fonction de politesse
+     */
     private void merci() {
         // Afficher le message de remerciement
         JFrame frame = new JFrame("Merci !");

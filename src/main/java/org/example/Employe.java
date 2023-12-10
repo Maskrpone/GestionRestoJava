@@ -64,7 +64,6 @@ public class Employe extends Thread implements Serializable {
 
     /**
      * Fonction qui sauvegarde le profil employé dans un fichier dans le répertoire "employes/"
-     * @author Hippolyte
      */
     public void ecrireEmploye() {
         final String nom_dossier = "employes/";
@@ -81,7 +80,6 @@ public class Employe extends Thread implements Serializable {
 
     /**
      * Fonction qui affiche les informations de l'employé dans la console
-     * @author Hippolyte
      */
     public void afficher() {
         System.out.println("Nom: " + this.nom);

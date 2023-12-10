@@ -49,6 +49,10 @@ public class Restaurant {
     // }
 
     // region interface
+
+    /**
+     * Affichage de l'interface d'accueil dans la console
+     */
     public void interfaceAccueil() {
         System.out.println("Menu d'accueil : ");
         String operation;

@@ -13,6 +13,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class FileText {
+    /**
+     * Ecrit la commande client dans un fichier .txt symbolisant une addition
+     * @param commande Commande à écrire
+     */
     public void writeCommandeToFile(Commande commande) {
         // Générer le nom de fichier en fonction de la date et de l'heure actuelles
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -69,7 +73,11 @@ public class FileText {
         }
     }
 
-    public void writeStockToFile(Map<Ingredients, Integer> map){
+    /**
+     * Ecrit la commande des stocks dans un fichier .txt symbolisant une facture
+     * @param commandeStock Commande stock à écrire dans un fichier
+     */
+    public void writeStockToFile(Map<Ingredients, Integer> commandeStock){
         // Générer le nom de fichier en fonction de la date et de l'heure actuelles
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String fileName = "facture" + dateFormat.format(new Date()) + ".txt";
@@ -97,7 +105,7 @@ public class FileText {
             writer.newLine();
 
             // Écrire les détails de la facture
-            for (Map.Entry<Ingredients, Integer> entry : map.entrySet()) {
+            for (Map.Entry<Ingredients, Integer> entry : commandeStock.entrySet()) {
                 Ingredients ingredient = entry.getKey();
                 int quantity = entry.getValue();
                 writer.write(String.format("%-20s%-10s%-10s", ingredient.getNom(), ingredient.getPrice(), quantity));
@@ -106,7 +114,7 @@ public class FileText {
 
             int total = 0;
             // Ajouter les prix des ingrédients avec leurs quantités respectives
-            for (Map.Entry<Ingredients, Integer> entry : map.entrySet()) {
+            for (Map.Entry<Ingredients, Integer> entry : commandeStock.entrySet()) {
                 Ingredients ingredient = entry.getKey();
                 int quantity = entry.getValue();
                 total += ingredient.getPrice() * quantity;
@@ -124,7 +132,9 @@ public class FileText {
         }
     }
 
-
+    /**
+     * Ouvre le dernier fichier d'addition client
+     */
     public void openLastFile() {
         File folder = new File("facture/additionClient");
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".txt"));

@@ -59,6 +59,10 @@ public class Boisson implements Serializable {
 
     //region Methode
 
+    /**
+     * Fonction qui incrémente les stocks
+     * @param nbToAdd nombre à incrémenter
+     */
     public void addNb(int nbToAdd){
         this.setNb(this.getNb() + nbToAdd);
     }
@@ -72,6 +76,10 @@ public class Boisson implements Serializable {
                 '}';
     }
 
+    /**
+     * Permet d'écrire la boisson dans un fichier sérialisé
+     * @param printConsole Message dans la console oui/non
+     */
     public void ecritureFichier(Boolean printConsole){
         final String nom_dossier = "stock/Boissons/";
         String nomFichier = this.getName() + ".ser";
